@@ -1,60 +1,71 @@
+USE master;
+GO
+
+IF DB_ID('ChamaJussa') IS NOT NULL
+    DROP DATABASE ChamaJussa
+GO
+
 CREATE DATABASE ChamaJussa;
 GO
 
 USE ChamaJussa;
 GO
 
-CREATE TABLE Usuario (
-    UsuarioID   UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-    Nome        VARCHAR(50) NOT NULL,
-    Email       VARCHAR(50) UNIQUE NOT NULL,
-    Senha       VARCHAR(255) NOT NULL,
-    NIF         INT UNIQUE NOT NULL
+-- Tabela Usuario
+CREATE TABLE usuario (
+    usuario_id  UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    nome        VARCHAR(50) NOT NULL,
+    email       VARCHAR(50) UNIQUE NOT NULL,
+    senha       VARCHAR(255) NOT NULL,
+    nif         INT UNIQUE NOT NULL
 );
 GO
 
-CREATE TABLE Localizacao (
-    LocalizacaoID   INT PRIMARY KEY IDENTITY(1,1),
-    Nome            VARCHAR(50) NOT NULL,
-    Andar           VARCHAR(15) NOT NULL
+-- Tabela Localizacao
+CREATE TABLE localizacao (
+    localizacao_id  INT PRIMARY KEY IDENTITY(1,1),
+    nome            VARCHAR(50) NOT NULL,
+    andar           VARCHAR(15) NOT NULL
 );
 GO
 
-CREATE TABLE Fila (
-    FilaID  INT PRIMARY KEY IDENTITY(1,1),
-    Nome    VARCHAR(50) NOT NULL
+-- Tabela Fila
+CREATE TABLE fila (
+    fila_id  INT PRIMARY KEY IDENTITY(1,1),
+    nome     VARCHAR(50) NOT NULL
 );
 GO
 
-CREATE TABLE StatusOrdem (
-    StatusOrdemID   INT PRIMARY KEY IDENTITY(1,1),
-    Nome            VARCHAR(50) NOT NULL
+-- Tabela Status
+CREATE TABLE status (
+    status_id  INT PRIMARY KEY IDENTITY(1,1),
+    nome       VARCHAR(50) NOT NULL
 );
 GO
 
+-- Tabela OrdemDeServico
 CREATE TABLE OrdemDeServico (
-    OrdemID         INT PRIMARY KEY IDENTITY(1,1),
-    NomeItem        VARCHAR(50) NOT NULL,
-    Titulo          VARCHAR(50) NOT NULL,
-    Dt_Criacao      DATETIME2 NOT NULL DEFAULT GETDATE(),
-    Descricao       VARCHAR(255) NOT NULL,
-    Imagem          VARBINARY(MAX) NULL,
+    os_id           INT PRIMARY KEY IDENTITY(1,1),
+    nome_item       VARCHAR(50) NOT NULL,
+    dt_criacao      DATETIME2 NOT NULL DEFAULT GETDATE(),
+    descricao       VARCHAR(255) NOT NULL,
+    imagem          VARCHAR(MAX) NULL,
+    
+    solicitante     UNIQUEIDENTIFIER NULL,
+    localizacao_id  INT NULL,
+    fila_id         INT NULL,
+    status          INT NULL,
 
-    Solicitante     UNIQUEIDENTIFIER NOT NULL,
-    LocalizacaoID   INT NOT NULL,
-    FilaID          INT NOT NULL,
-    StatusOrdemID   INT NOT NULL,
+    CONSTRAINT FK_Ordem_Usuario FOREIGN KEY (solicitante)
+        REFERENCES usuario(usuario_id),
 
-    CONSTRAINT FK_Ordem_Usuario FOREIGN KEY (Solicitante)
-        REFERENCES Usuario(UsuarioID),
+    CONSTRAINT FK_Ordem_Localizacao FOREIGN KEY (localizacao_id)
+        REFERENCES localizacao(localizacao_id),
 
-    CONSTRAINT FK_Ordem_Localizacao FOREIGN KEY (LocalizacaoID)
-        REFERENCES Localizacao(LocalizacaoID),
+    CONSTRAINT FK_Ordem_Fila FOREIGN KEY (fila_id)
+        REFERENCES fila(fila_id),
 
-    CONSTRAINT FK_Ordem_Fila FOREIGN KEY (FilaID)
-        REFERENCES Fila(FilaID),
-
-    CONSTRAINT FK_Ordem_StatusOrdem FOREIGN KEY (StatusOrdemID)
-        REFERENCES StatusOrdem(StatusOrdemID)
+    CONSTRAINT FK_Ordem_Status FOREIGN KEY (status)
+        REFERENCES status(status_id)
 );
 GO
