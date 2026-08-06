@@ -1,24 +1,55 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Icon } from "../../constants/theme";
 
 export const Navbar = () => {
+  const navigation = useNavigation<any>();
+
   return (
     <View style={styles.container}>
-      <View style={styles.button}>
-        <Image source={require("../../../assets/imgs/MinhasOS.svg")} />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("Listagem")}
+      >
+        <Image
+          source={require("../../../assets/imgs/minhasOS.png")}
+          style={{ ...Icon }}
+        />
         <Text style={styles.text}>Minhas OS</Text>
-      </View>
-      <View style={styles.button}>
-        <Image source={require("../../../assets/imgs/CriarOS.svg")} />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("Servico")}
+      >
+        <Image
+          source={require("../../../assets/imgs/criarOS.png")}
+          style={{ ...Icon }}
+        />
         <Text style={styles.text}>Criar OS</Text>
-      </View>
-      <View style={styles.button}>
-        <Image source={require("../../../assets/imgs/Notificacoes.svg")} />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("Notificacao")}
+      >
+        <Image
+          source={require("../../../assets/imgs/notificacoes.png")}
+          style={{ ...Icon }}
+        />
         <Text style={styles.text}>Notificações</Text>
-      </View>
-      <View style={styles.button}>
-        <Image source={require("../../../assets/imgs/Perfil.svg")} />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("Perfil")}
+      >
+        <Image
+          source={require("../../../assets/imgs/perfil.png")}
+          style={{ ...Icon }}
+        />
         <Text style={styles.text}>Perfil</Text>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -31,13 +62,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: "#fff",
     justifyContent: "space-between",
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
   text: {
-    fontSize: 16,
+    fontSize: 12,
     fontFamily: "Montserrat_400Regular",
   },
   button: {
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
 });
