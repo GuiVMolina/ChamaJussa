@@ -5,9 +5,12 @@ export const Colors = {
   red: "hsl(355, 90%, 60%)",
   green: "hsl(160, 85%, 40%)",
   blue: "hsl(215, 90%, 60%)",
+  yellow: "hsl(55, 50%, 60%)",
   white: "hsl(0, 100%, 100%)",
   black: "hsl(215, 100%, 5%)",
   statusAberta: "hsla(215, 90%, 60%, 0.15)",
+  statusEmAndamento: "hsla(55, 75%, 60%, 0.15)",
+  statusConcluida: "hsla(135, 90%, 60%, 0.15)",
   off: "hsl(0, 0%, 95%)",
   border: "hsl(0, 0%, 85%)",
   darkerBorder: "hsl(0, 0%, 70%)",
@@ -21,9 +24,13 @@ const Font = {
 
 export const Container: ViewStyle = {
   flex: 1,
-  padding: 20,
+  paddingHorizontal: 20,
   alignItems: "center",
   backgroundColor: Colors.bgc,
+};
+
+export const NavHeight: ViewStyle = {
+  height: 80,
 };
 
 export const Button: ViewStyle = {
@@ -50,12 +57,6 @@ export const ButtonTextOff: TextStyle = {
   fontSize: 20,
   color: Colors.darkerBorder,
   fontFamily: Font.regular,
-};
-
-export const ButtonArea: ViewStyle = {
-  gap: 10,
-  flexWrap: "wrap",
-  flexDirection: "row",
 };
 
 export const H1: TextStyle = {
@@ -165,4 +166,8 @@ export const Icon: ImageStyle = {
   width: 40,
   height: 40,
   objectFit: "contain",
+};
+
+export const Scroll: ViewStyle = {
+  gap: 10,
 };

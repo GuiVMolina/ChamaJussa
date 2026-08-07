@@ -9,15 +9,15 @@ import {
   Container,
   H1,
   H4,
-  P,
+  NavbarCompletion,
 } from "../../constants/theme";
 import { Navbar } from "../../components/navbar/Navbar";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export const Perfil = () => {
+export default function Perfil() {
   return (
     <SafeAreaView style={{ ...Container }}>
-      <View style={{ width: "100%", ...Column }}>
+      <View style={{ width: "100%", ...Column, ...NavbarCompletion }}>
         <View style={{ ...Card, ...Center }}>
           <Image source={require("../../../assets/imgs/kessia.png")} />
           <Text style={{ ...H1 }}>Késsia Milena</Text>
@@ -30,4 +30,4 @@ export const Perfil = () => {
       <Navbar />
     </SafeAreaView>
   );
-};
+}

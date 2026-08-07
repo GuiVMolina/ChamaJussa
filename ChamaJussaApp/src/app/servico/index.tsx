@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Pressable } from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import {
   Button,
   ButtonText,
@@ -14,7 +14,7 @@ import {
 import { Navbar } from "../../components/navbar/Navbar";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export const Servico = () => {
+export default function Servico() {
   return (
     <SafeAreaView style={{ ...Container }}>
       <Text style={{ ...H1 }}>Criar ordem de serviço</Text>
@@ -44,11 +44,11 @@ export const Servico = () => {
           <Text style={{ ...Label }}>Imagem / Foto do problema *</Text>
           <TextInput style={{ ...Input }} placeholder="Ex: Vazamento da pia" />
         </View>
-        <Pressable style={{ backgroundColor: Colors.green, ...Button }}>
+        <TouchableOpacity style={{ backgroundColor: Colors.green, ...Button }}>
           <Text style={{ ...ButtonText }}>Abrir Ordem de Serviço</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
       <Navbar />
     </SafeAreaView>
   );
-};
+}

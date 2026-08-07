@@ -13,11 +13,11 @@ import {
   Label,
   P,
 } from "../../constants/theme";
+import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
 
-export const Login = () => {
-  const navigation = useNavigation<any>();
+export default function Login() {
+  const router = useRouter();
 
   return (
     <SafeAreaView style={{ ...Container }}>
@@ -42,11 +42,11 @@ export const Login = () => {
         </View>
         <TouchableOpacity
           style={{ backgroundColor: Colors.green, ...Button }}
-          onPress={() => navigation.navigate("Listagem")}
+          onPress={() => router.push("/listaOS")}
         >
           <Text style={{ ...ButtonText }}>Acessar o sistema</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
-};
+}

@@ -1,15 +1,16 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
+import { styles } from "./Navbar.styles";
 import { Icon } from "../../constants/theme";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 
 export const Navbar = () => {
-  const navigation = useNavigation<any>();
+  const router = useRouter();
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Listagem")}
+        onPress={() => router.replace("/listaOS")}
       >
         <Image
           source={require("../../../assets/imgs/minhasOS.png")}
@@ -20,7 +21,7 @@ export const Navbar = () => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Servico")}
+        onPress={() => router.replace("/servico")}
       >
         <Image
           source={require("../../../assets/imgs/criarOS.png")}
@@ -31,7 +32,7 @@ export const Navbar = () => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Notificacao")}
+        onPress={() => router.replace("/notificacao")}
       >
         <Image
           source={require("../../../assets/imgs/notificacoes.png")}
@@ -42,7 +43,7 @@ export const Navbar = () => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Perfil")}
+        onPress={() => router.replace("/perfil")}
       >
         <Image
           source={require("../../../assets/imgs/perfil.png")}
@@ -53,26 +54,3 @@ export const Navbar = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    height: 80,
-    paddingVertical: 10,
-    flexDirection: "row",
-    paddingHorizontal: 20,
-    backgroundColor: "#fff",
-    justifyContent: "space-between",
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  text: {
-    fontSize: 12,
-    fontFamily: "Montserrat_400Regular",
-  },
-  button: {
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-});
