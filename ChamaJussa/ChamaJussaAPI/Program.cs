@@ -72,6 +72,7 @@ builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IOrdemServicoRepository, OrdemServicoRepository>();
 builder.Services.AddScoped<IFilaRepository, FilaRepository>();
 builder.Services.AddScoped<IStatusRepository, StatusRepository>();
+builder.Services.AddScoped<ILocalRepository, LocalRepository>();
 
 // Serviços
 builder.Services.AddScoped<IStorageService, LocalStorageService>();

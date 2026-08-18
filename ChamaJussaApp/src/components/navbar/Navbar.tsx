@@ -21,7 +21,7 @@ export const Navbar = () => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => router.replace("/servico")}
+        onPress={() => router.replace("/criarOS")}
       >
         <Image
           source={require("../../../assets/imgs/criarOS.png")}

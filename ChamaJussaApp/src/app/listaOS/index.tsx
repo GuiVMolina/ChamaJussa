@@ -16,12 +16,12 @@ import {
   Container,
   H1,
   H3,
-  NavHeight,
   Row,
   Scroll,
 } from "../../constants/theme";
 import { CardItem } from "../../components/card/CardItem";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 
 const ordens = [
   {
@@ -50,6 +50,8 @@ const ordens = [
 ];
 
 export default function Listagem() {
+  const router = useRouter();
+  
   return (
     <SafeAreaView style={{ ...Container }}>
       <View style={{ ...Column }}>
@@ -58,7 +60,10 @@ export default function Listagem() {
             <Text style={{ ...H3 }}>Olá, Késsia</Text>
             <Text style={{ ...H1 }}>Minhas OSs</Text>
           </View>
-          <TouchableOpacity style={{ backgroundColor: Colors.blue, ...Button }}>
+          <TouchableOpacity
+            style={{ backgroundColor: Colors.blue, ...Button }}
+            onPress={() => router.replace("/criarOS")}
+          >
             <Text style={{ ...ButtonText }}>Nova OS</Text>
           </TouchableOpacity>
         </View>

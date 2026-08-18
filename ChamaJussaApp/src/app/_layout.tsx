@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, ActivityIndicator, View, ScrollView } from "react-native";
+import { StyleSheet, ActivityIndicator, View } from "react-native";
 
 // Rotas com Expo-router
 import { Stack } from "expo-router";
@@ -54,7 +54,7 @@ export default function RootLayout() {
         <Stack.Screen name="listaOS/index" options={{ title: "Lista de OS" }} />
         <Stack.Screen name="perfil/index" options={{ title: "Perfil" }} />
         <Stack.Screen name="detalhe/index" options={{ title: "Detalhes" }} />
-        <Stack.Screen name="servico/index" options={{ title: "Serviço" }} />
+        <Stack.Screen name="criarOS/index" options={{ title: "Criar OS" }} />
         <Stack.Screen
           name="notificacao/index"
           options={{ title: "Notificações" }}

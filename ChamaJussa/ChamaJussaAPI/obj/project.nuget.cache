@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ulWERn54ykg=",
+  "dgSpecHash": "IKqosn+DhpA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\46581849820\\Desktop\\ChamaJussaAPI\\ChamaJussaAPI\\ChamaJussaAPI.csproj",
+  "projectFilePath": "C:\\Users\\46581849820\\Desktop\\ChamaJussa\\ChamaJussa\\ChamaJussaAPI\\ChamaJussaAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\46581849820\\.nuget\\packages\\awssdk.core\\4.0.100.9\\awssdk.core.4.0.100.9.nupkg.sha512",
     "C:\\Users\\46581849820\\.nuget\\packages\\awssdk.s3\\4.0.101.5\\awssdk.s3.4.0.101.5.nupkg.sha512",
