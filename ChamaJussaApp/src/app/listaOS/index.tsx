@@ -22,36 +22,12 @@ import {
 import { CardItem } from "../../components/card/CardItem";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
-
-const ordens = [
-  {
-    id: "1",
-    numero: "OS-001",
-    status: "Aberta",
-    titulo: "Vazamento hidráulico no Bloco B",
-    descricao:
-      "Há um vazamento constante de água por baixo da pia do banheiro masculino do segundo andar...",
-  },
-  {
-    id: "2",
-    numero: "OS-002",
-    status: "Em Andamento",
-    titulo: "Computador sem internet",
-    descricao:
-      "O computador do laboratório 4 não está conseguindo acessar a internet.",
-  },
-  {
-    id: "3",
-    numero: "OS-003",
-    status: "Concluída",
-    titulo: "Projetor queimado",
-    descricao: "Foi realizada a troca da lâmpada do projetor.",
-  },
-];
+import { useOrdemServico } from "../../hooks/useOrdemServico";
 
 export default function Listagem() {
   const router = useRouter();
-  
+  const os = useOrdemServico() as any[] | undefined;
+
   return (
     <SafeAreaView style={{ ...Container }}>
       <View style={{ ...Column }}>
@@ -92,11 +68,11 @@ export default function Listagem() {
         </View>
 
         <FlatList
-          data={ordens}
+          data={os}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <CardItem item={item} />}
           contentContainerStyle={{ ...Scroll }}
           showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => <CardItem item={item} />}
         />
       </View>
       <Navbar />

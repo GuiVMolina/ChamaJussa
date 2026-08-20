@@ -1,4 +1,7 @@
-﻿namespace ChamaJussaAPI.Domains;
+﻿using System;
+using System.Collections.Generic;
+
+namespace ChamaJussaAPI.Domains;
 
 public partial class usuario
 {

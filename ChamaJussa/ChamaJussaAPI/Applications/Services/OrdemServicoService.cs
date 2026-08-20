@@ -29,9 +29,9 @@ namespace ChamaJussaAPI.Applications.Services
                 LocalizacaoNome = os.localizacao != null ? $"{os.localizacao.nome} (Andar: {os.localizacao.andar})" : null,
                 Descricao = os.descricao,
                 Imagem = os.imagem,
-                StatusId = os.status_id,
+                StatusId = os.status,
                 StatusNome = os.statusNavigation?.nome,
-                FilaId = os.fila_id,
+                FilaId = os.fila,
                 FilaNome = os.filaNavigation?.nome
             };
         }
@@ -71,8 +71,8 @@ namespace ChamaJussaAPI.Applications.Services
                 localizacao_id = osDto.LocalizacaoId,
                 descricao = osDto.Descricao,
                 imagem = urlImagem,
-                status_id = statusIdInicial,
-                fila_id = filaIdInicial
+                status = statusIdInicial,
+                fila = filaIdInicial
             };
 
             _repository.Adicionar(os);
@@ -115,7 +115,7 @@ namespace ChamaJussaAPI.Applications.Services
                 return string.Equals(os.statusNavigation.nome, "Aberto", StringComparison.OrdinalIgnoreCase) ||
                        string.Equals(os.statusNavigation.nome, "Aberta", StringComparison.OrdinalIgnoreCase);
             }
-            return os.status_id == 1;
+            return os.status == 1;
         }
 
         public async Task<LerOrdemServicoDto> EditarAsync(int id, EditarOrdemServicoDto dto)
@@ -190,7 +190,7 @@ namespace ChamaJussaAPI.Applications.Services
                 throw new DomainException("O status informado não existe.");
             }
 
-            os.status_id = statusId;
+            os.status = statusId;
             _repository.Atualizar(os);
 
             var osAtualizada = _repository.ObterPorId(os.os_id);

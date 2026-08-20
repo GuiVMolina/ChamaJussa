@@ -1,3 +1,6 @@
+﻿using System;
+using System.Collections.Generic;
+
 namespace ChamaJussaAPI.Domains;
 
 public partial class OrdemDeServico
@@ -16,9 +19,9 @@ public partial class OrdemDeServico
 
     public string? imagem { get; set; }
 
-    public int? status_id { get; set; }
+    public int? status { get; set; }
 
-    public int? fila_id { get; set; }
+    public int? fila { get; set; }
 
     public virtual fila? filaNavigation { get; set; }
 

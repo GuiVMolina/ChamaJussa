@@ -11,13 +11,8 @@ using ChamaJussaAPI.Applications.Autenticacao;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Pegando a connection string
-string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
-
-// Conexão com banco
-builder.Services.AddDbContext<ChamaJussaContext>(options => options.UseSqlServer(connectionString));
-
 // Add services to the container.
+
 builder.Services.AddControllers();
 
 // Configura política de CORS ampla para acesso do frontend
@@ -66,21 +61,25 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// Registrar DbContext com a conexão SQL Server scaffolded
+builder.Services.AddDbContext<ChamaJussaContext>(options =>
+    options.UseSqlServer("Server=DESKTOP-LAO5MIJ\\SQLEXPRESSTEC;Database=ChamaJussa;user=sa;pwd=abc123;TrustServerCertificate=True"));
+
 // Registros de Injeção de Dependência (DI)
 // Repositórios
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IOrdemServicoRepository, OrdemServicoRepository>();
-builder.Services.AddScoped<IFilaRepository, FilaRepository>();
-builder.Services.AddScoped<IStatusRepository, StatusRepository>();
 builder.Services.AddScoped<ILocalRepository, LocalRepository>();
+builder.Services.AddScoped<IStatusRepository, StatusRepository>();
+builder.Services.AddScoped<IFilaRepository, FilaRepository>();
 
 // Serviços
 builder.Services.AddScoped<IStorageService, LocalStorageService>();
 builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddScoped<OrdemServicoService>();
 builder.Services.AddScoped<AutenticacaoService>();
-builder.Services.AddScoped<FilaService>();
 builder.Services.AddScoped<StatusService>();
+builder.Services.AddScoped<FilaService>();
 
 // JWT Helper
 builder.Services.AddScoped<GeradorTokenJwt>();
@@ -111,13 +110,18 @@ var app = builder.Build();
 app.UseCors("CorsPolicy");
 
 // Configure the HTTP request pipeline.
+//Basta fazer o redirecionamento de HTTPS rodar apenas quando não estiver em desenvolvimento, ou simplesmente comentar essa linha durante os testes locais:
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// Execute o redirecionamento HTTPS apenas em produção:
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 // Habilita a servir arquivos estáticos (como as imagens salvas na pasta wwwroot)
 app.UseStaticFiles();
