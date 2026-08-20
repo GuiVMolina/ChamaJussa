@@ -19,11 +19,11 @@ import {
   InputArea,
   Label,
   P,
-} from "../../constants/theme";
+} from "@/src/constants/theme";
+import { useState } from "react";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useState } from "react";
-import { autenticacaoService } from "../../service/autenticacaoService";
+import { autenticacaoService } from "@/src/service/autenticacaoService";
 
 export default function Login() {
   const router = useRouter();
@@ -42,34 +42,34 @@ export default function Login() {
 
     try {
       await autenticacaoService.login({ email: emailEntry, senha: senhaEntry });
-      router.replace("/listaOS");
+      router.replace("/(tabs)/listaOS");
     } catch (error) {
       Alert.alert("⛒ Erro! ⛒", "E-mail ou senha inválido");
     }
   }
 
   return (
-    <SafeAreaView style={{ ...Container }}>
-      <Image source={require("../../../assets/imgs/logo.png")} />
-      <View style={{ ...Card, ...Column }}>
-        <View style={{ ...Center }}>
-          <Text style={{ ...H1 }}>Chama Jussa</Text>
-          <Text style={{ ...P }}>Gerenciamento de Ordens de Serviço</Text>
+    <SafeAreaView style={Container}>
+      <Image source={require("@/assets/img/logo.png")} />
+      <View style={[Card, Column]}>
+        <View style={Center}>
+          <Text style={H1}>Chama Jussa</Text>
+          <Text style={P}>Gerenciamento de Ordens de Serviço</Text>
         </View>
 
-        <View style={{ ...InputArea }}>
-          <Text style={{ ...Label }}>E-mail</Text>
+        <View style={InputArea}>
+          <Text style={Label}>E-mail</Text>
           <TextInput
-            style={{ ...Input }}
+            style={Input}
             placeholder="email@email.com"
             value={email}
             onChangeText={setEmail}
           />
         </View>
-        <View style={{ ...InputArea }}>
-          <Text style={{ ...Label }}>Senha</Text>
+        <View style={InputArea}>
+          <Text style={Label}>Senha</Text>
           <TextInput
-            style={{ ...Input }}
+            style={Input}
             placeholder="********"
             secureTextEntry
             value={senha}
@@ -77,10 +77,10 @@ export default function Login() {
           />
         </View>
         <TouchableOpacity
-          style={{ backgroundColor: Colors.green, ...Button }}
+          style={[Button, { backgroundColor: Colors.green }]}
           onPress={acessar}
         >
-          <Text style={{ ...ButtonText }}>Acessar o sistema</Text>
+          <Text style={ButtonText}>Acessar o sistema</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

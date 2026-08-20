@@ -1,15 +1,8 @@
 import React from "react";
 import { useRouter } from "expo-router";
 import { View, Text, TouchableOpacity } from "react-native";
-import { Card, Colors, H1, H2, P, Row, Status } from "../../constants/theme";
-
-export interface OrdemServico {
-  id: string;
-  numero: string;
-  status: "Aberta" | "Em Andamento" | "Concluída" | string;
-  titulo: string;
-  descricao: string;
-}
+import { Card, Colors, H1, H2, P, Row, Status } from "@/src/constants/theme";
+import { OrdemServico } from "@/src/@types";
 
 interface CardItemProps {
   item: OrdemServico;
@@ -36,31 +29,31 @@ export const CardItem: React.FC<CardItemProps> = ({ item }) => {
       case "Concluída":
         return Colors.green;
       default:
-        return Colors.blue;
+        return Colors.inactive;
     }
   };
 
   return (
     <TouchableOpacity
-      style={{ ...Card }}
-      onPress={() => router.push(`/detalhe?id=${item.id}`)}
+      style={Card}
+      onPress={() => router.push(`/detalhe?id=${item.osId}`)}
     >
-      <View style={{ ...Row }}>
-        <Text style={{ ...H1 }}>{item.numero}</Text>
+      <View style={Row}>
+        <Text style={H1}>{item.osId}</Text>
         <Text
           style={{
-            backgroundColor: bgColor(item.status),
-            color: color(item.status),
+            backgroundColor: bgColor(item.statusNome),
+            color: color(item.statusNome),
             borderWidth: 2,
-            borderColor: color(item.status),
+            borderColor: color(item.statusNome),
             ...Status,
           }}
         >
-          {item.status}
+          {item.statusNome}
         </Text>
       </View>
-      <Text style={{ ...H2 }}>{item.titulo}</Text>
-      <Text style={{ ...P }} numberOfLines={2}>
+      <Text style={H2}>{item.nomeItem}</Text>
+      <Text style={P} numberOfLines={2}>
         {item.descricao}
       </Text>
     </TouchableOpacity>

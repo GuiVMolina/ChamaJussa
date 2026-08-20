@@ -13,10 +13,11 @@ export function useOrdemServico() {
     } catch (error) {
       Alert.alert("Erro!", "Problema na Listagem");
     }
-    useEffect(() => {
-      listarOs();
-    }, []);
-
-    return os;
   }
+
+  useEffect(() => {
+    listarOs();
+  }, []);
+
+  return os;
 }
