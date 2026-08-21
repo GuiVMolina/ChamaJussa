@@ -1,63 +1,49 @@
 import React from "react";
-import { View } from "react-native";
 import { Tabs } from "expo-router";
 import { Colors } from "@/src/constants/theme";
 import AddIcon from "@/assets/svg/AddIcon.svg";
 import BellIcon from "@/assets/svg/BellIcon.svg";
 import ListIcon from "@/assets/svg/ListIcon.svg";
 import ProfileIcon from "@/assets/svg/ProfileIcon.svg";
+import { StyleSheet } from "react-native";
 
-function TabIconWrapper({
-  children,
-  focused,
-}: {
-  children: React.ReactNode;
-  focused: boolean;
-}) {
-  return (
-    <View
-      style={{
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: focused ? Colors.white : "transparent",
-      }}
-    >
-      {children}
-    </View>
-  );
-}
+const styles = StyleSheet.create({
+  tabBar: {
+    backgroundColor: Colors.red,
+    borderTopWidth: 0,
+    paddingBottom: 8,
+    paddingTop: 8,
+  },
+  tabBarItem: {
+    borderRadius: 16,
+    marginHorizontal: 8,
+    overflow: "hidden",
+  },
+  tabBarLabel: {
+    fontSize: 12,
+    fontFamily: "Montserrat_700Bold",
+  },
+});
 
 export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarStyle: {
-          backgroundColor: Colors.bgc2,
-          borderColor: Colors.white,
-          borderTopWidth: 1,
-          paddingBottom: 8,
-          paddingTop: 10,
-        },
+        tabBarStyle: styles.tabBar,
+        tabBarItemStyle: styles.tabBarItem,
         tabBarActiveTintColor: Colors.red,
-        tabBarInactiveTintColor: Colors.inactive,
-        tabBarLabelStyle: {
-          fontSize: 14,
-          fontFamily: "Montserrat_700Bold",
-        },
+        tabBarInactiveTintColor: Colors.white,
+        tabBarActiveBackgroundColor: Colors.white,
+        tabBarLabelStyle: styles.tabBarLabel,
       }}
     >
       <Tabs.Screen
         name="listaOS/index"
         options={{
           title: "Minhas OS",
-          tabBarIcon: ({ color, focused }) => (
-            <TabIconWrapper focused={focused}>
-              <ListIcon fill={color} color={color} width={24} height={24} />
-            </TabIconWrapper>
+          tabBarIcon: ({ color }) => (
+            <ListIcon color={color} width={24} height={24} />
           ),
         }}
       />
@@ -66,10 +52,8 @@ export default function TabsLayout() {
         name="criarOS/index"
         options={{
           title: "Criar OS",
-          tabBarIcon: ({ color, focused }) => (
-            <TabIconWrapper focused={focused}>
-              <AddIcon fill={color} color={color} width={24} height={24} />
-            </TabIconWrapper>
+          tabBarIcon: ({ color }) => (
+            <AddIcon color={color} width={24} height={24} />
           ),
         }}
       />
@@ -77,11 +61,9 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="notificacao/index"
         options={{
-          title: "Notificações",
-          tabBarIcon: ({ color, focused }) => (
-            <TabIconWrapper focused={focused}>
-              <BellIcon fill={color} color={color} width={24} height={24} />
-            </TabIconWrapper>
+          title: "Notificação",
+          tabBarIcon: ({ color }) => (
+            <BellIcon color={color} width={24} height={24} />
           ),
         }}
       />
@@ -90,16 +72,14 @@ export default function TabsLayout() {
         name="perfil/index"
         options={{
           title: "Perfil",
-          tabBarIcon: ({ color, focused }) => (
-            <TabIconWrapper focused={focused}>
-              <ProfileIcon fill={color} color={color} width={24} height={24} />
-            </TabIconWrapper>
+          tabBarIcon: ({ color }) => (
+            <ProfileIcon color={color} width={24} height={24} />
           ),
         }}
       />
 
       <Tabs.Screen
-        name="detalhe/index"
+        name="detalhe/[id]"
         options={{
           href: null,
         }}

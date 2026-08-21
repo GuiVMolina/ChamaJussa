@@ -11,6 +11,7 @@ import {
   ButtonText,
   ButtonTextOff,
   Colors,
+  Column,
   Container,
   H1,
   H3,
@@ -26,10 +27,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Listagem() {
   const router = useRouter();
-  const os = useOrdemServico();
+  const { os } = useOrdemServico();
 
   return (
-    <SafeAreaView style={Container} edges={["top", "bottom"]}>
+    <SafeAreaView style={[Container, Column]} edges={["top"]}>
       <View style={[Row, SpaceBetween, SafeArea]}>
         <View>
           <Text style={H3}>Olá, Késsia</Text>
@@ -37,37 +38,35 @@ export default function Listagem() {
         </View>
         <TouchableOpacity
           style={[Button, { backgroundColor: Colors.red }]}
-          onPress={() => router.replace("/criarOS")}
+          onPress={() => router.push("/criarOS")}
         >
           <Text style={ButtonText}>Nova OS</Text>
         </TouchableOpacity>
       </View>
 
-      <View>
-        <ScrollView
-          contentContainerStyle={[Scroll, SafeArea]}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-        >
-          <TouchableOpacity style={[Button, { backgroundColor: Colors.red }]}>
-            <Text style={ButtonText}>Todos</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={ButtonOff}>
-            <Text style={ButtonTextOff}>Abertas</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={ButtonOff}>
-            <Text style={ButtonTextOff}>Em Andamento</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={ButtonOff}>
-            <Text style={ButtonTextOff}>Concluídas</Text>
-          </TouchableOpacity>
-        </ScrollView>
-      </View>
+      <ScrollView
+        contentContainerStyle={[Scroll, SafeArea]}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+      >
+        <TouchableOpacity style={[Button, { backgroundColor: Colors.red }]}>
+          <Text style={ButtonText}>Todos</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={ButtonOff}>
+          <Text style={ButtonTextOff}>Abertas</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={ButtonOff}>
+          <Text style={ButtonTextOff}>Em Andamento</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={ButtonOff}>
+          <Text style={ButtonTextOff}>Concluídas</Text>
+        </TouchableOpacity>
+      </ScrollView>
 
       <FlatList
         data={os}
         keyExtractor={(item) => String(item.osId)}
-        contentContainerStyle={Scroll}
+        contentContainerStyle={[Scroll, SafeArea]}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => <CardItem item={item} />}
       />

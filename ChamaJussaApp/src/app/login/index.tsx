@@ -19,6 +19,7 @@ import {
   InputArea,
   Label,
   P,
+  SafeArea,
 } from "@/src/constants/theme";
 import { useState } from "react";
 import { useRouter } from "expo-router";
@@ -42,14 +43,14 @@ export default function Login() {
 
     try {
       await autenticacaoService.login({ email: emailEntry, senha: senhaEntry });
-      router.replace("/(tabs)/listaOS");
+      router.push("/(tabs)/listaOS");
     } catch (error) {
       Alert.alert("⛒ Erro! ⛒", "E-mail ou senha inválido");
     }
   }
 
   return (
-    <SafeAreaView style={Container}>
+    <SafeAreaView style={[Container, SafeArea]}>
       <Image source={require("@/assets/img/logo.png")} />
       <View style={[Card, Column]}>
         <View style={Center}>

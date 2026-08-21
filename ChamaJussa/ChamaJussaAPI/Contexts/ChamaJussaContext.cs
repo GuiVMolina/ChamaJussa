@@ -34,7 +34,7 @@ public partial class ChamaJussaContext : DbContext
     {
         modelBuilder.Entity<OrdemDeServico>(entity =>
         {
-            entity.HasKey(e => e.os_id).HasName("PK__OrdemDeS__374FA4B5659BD89A");
+            entity.HasKey(e => e.os_id).HasName("PK__OrdemDeS__374FA4B576C4DFB3");
 
             entity.Property(e => e.descricao)
                 .HasMaxLength(255)
@@ -66,7 +66,7 @@ public partial class ChamaJussaContext : DbContext
 
         modelBuilder.Entity<fila>(entity =>
         {
-            entity.HasKey(e => e.fila_id).HasName("PK__fila__79CFDF23564B0263");
+            entity.HasKey(e => e.fila_id).HasName("PK__fila__79CFDF233BAFD4B5");
 
             entity.Property(e => e.nome)
                 .HasMaxLength(50)
@@ -75,7 +75,7 @@ public partial class ChamaJussaContext : DbContext
 
         modelBuilder.Entity<localizacao>(entity =>
         {
-            entity.HasKey(e => e.localizacao_id).HasName("PK__localiza__91EC50FDEC290440");
+            entity.HasKey(e => e.localizacao_id).HasName("PK__localiza__91EC50FD5DAD4DE5");
 
             entity.Property(e => e.andar)
                 .HasMaxLength(15)
@@ -87,7 +87,7 @@ public partial class ChamaJussaContext : DbContext
 
         modelBuilder.Entity<status>(entity =>
         {
-            entity.HasKey(e => e.status_id).HasName("PK__status__3683B5316B26F665");
+            entity.HasKey(e => e.status_id).HasName("PK__status__3683B5318CCEC6FD");
 
             entity.Property(e => e.nome)
                 .HasMaxLength(30)
@@ -96,7 +96,7 @@ public partial class ChamaJussaContext : DbContext
 
         modelBuilder.Entity<usuario>(entity =>
         {
-            entity.HasKey(e => e.usuario_id).HasName("PK__usuario__2ED7D2AF40B29E3B");
+            entity.HasKey(e => e.usuario_id).HasName("PK__usuario__2ED7D2AFC71E800F");
 
             entity.HasIndex(e => e.email, "UQ_usuario_email").IsUnique();
 

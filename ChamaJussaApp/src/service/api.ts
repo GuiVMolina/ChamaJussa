@@ -2,24 +2,22 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { Platform } from "react-native";
 
-// Definndo o host local conforme plataforma(expo, web, ios)
 const host = Platform.OS === "android" ? "10.0.2.2" : "localhost";
 
-// Dessa forma, conseguimos rodar tanto na web quanto no emulador
-const enderecoApi = process.env.EXPO_PUBLIC_API_URL || `http://${host}/api/`;
+const enderecoApi =
+  process.env.EXPO_PUBLIC_API_URL || `http://${host}:5015/api/`;
 
 export const api = axios.create({
   baseURL: enderecoApi,
   timeout: 10000,
 });
 
-// SOLICITAÇÃO / REQUISIÇÃO
-// Interceptar / Impedir o curso de toda requisição
 api.interceptors.request.use(async (config) => {
-  const token = await AsyncStorage.getItem(process.env.EXPO_PUBLIC_API_URL || "Token"); // env.EXPO_PUBLIC_TOKEN_KEY
+  const tokenKey = process.env.EXPO_PUBLIC_TOKEN_KEY || "Token";
+  const token = await AsyncStorage.getItem(tokenKey);
 
   if (token) {
-    // Configurar o bearer.token
+    config.headers = config.headers || {};
     config.headers.Authorization = `Bearer ${token}`;
   }
 

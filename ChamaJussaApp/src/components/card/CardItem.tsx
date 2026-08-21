@@ -1,8 +1,17 @@
 import React from "react";
 import { useRouter } from "expo-router";
+import { OrdemServico } from "@/src/@types/ordemServico";
 import { View, Text, TouchableOpacity } from "react-native";
-import { Card, Colors, H1, H2, P, Row, Status } from "@/src/constants/theme";
-import { OrdemServico } from "@/src/@types";
+import {
+  Card,
+  Colors,
+  H1,
+  H2,
+  P,
+  Row,
+  SpaceBetween,
+  Status,
+} from "@/src/constants/theme";
 
 interface CardItemProps {
   item: OrdemServico;
@@ -11,45 +20,40 @@ interface CardItemProps {
 export const CardItem: React.FC<CardItemProps> = ({ item }) => {
   const router = useRouter();
 
-  const bgColor = (status: string) => {
-    switch (status) {
-      case "Em Andamento":
-        return Colors.statusEmAndamento;
-      case "Concluída":
-        return Colors.statusConcluida;
-      default:
-        return Colors.statusAberta;
+  const getStatusStyle = (status: string = "") => {
+    const s = status.toLowerCase();
+
+    if (s.includes("andamento")) {
+      return { bg: Colors.statusEmAndamento, color: Colors.yellow };
     }
+    if (s.includes("conclu")) {
+      return { bg: Colors.statusConcluida, color: Colors.green };
+    }
+    return { bg: Colors.statusAberta, color: Colors.red };
   };
 
-  const color = (status: string) => {
-    switch (status) {
-      case "Em Andamento":
-        return Colors.yellow;
-      case "Concluída":
-        return Colors.green;
-      default:
-        return Colors.inactive;
-    }
-  };
+  const currentStatus = getStatusStyle(item?.statusNome);
+
+  function handleNavigate() {
+    router.push(`/detalhe/${item.osId}`);
+  }
 
   return (
-    <TouchableOpacity
-      style={Card}
-      onPress={() => router.push(`/detalhe?id=${item.osId}`)}
-    >
-      <View style={Row}>
-        <Text style={H1}>{item.osId}</Text>
+    <TouchableOpacity style={Card} onPress={handleNavigate}>
+      <View style={[Row, SpaceBetween]}>
+        <Text style={H1}>#{item.osId}</Text>
         <Text
-          style={{
-            backgroundColor: bgColor(item.statusNome),
-            color: color(item.statusNome),
-            borderWidth: 2,
-            borderColor: color(item.statusNome),
-            ...Status,
-          }}
+          style={[
+            Status,
+            {
+              backgroundColor: currentStatus.bg,
+              color: currentStatus.color,
+              borderWidth: 2,
+              borderColor: currentStatus.color,
+            },
+          ]}
         >
-          {item.statusNome}
+          {item.statusNome ?? "Aberto"}
         </Text>
       </View>
       <Text style={H2}>{item.nomeItem}</Text>

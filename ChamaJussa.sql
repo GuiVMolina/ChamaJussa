@@ -1,7 +1,7 @@
 USE [master]
 GO
 
--- Limpa objetos criados por engano no banco master
+-- 1. Limpa objetos criados por engano no banco master
 IF OBJECT_ID('dbo.OrdemDeServico', 'U') IS NOT NULL DROP TABLE [dbo].[OrdemDeServico];
 IF OBJECT_ID('dbo.usuario', 'U') IS NOT NULL DROP TABLE [dbo].[usuario];
 IF OBJECT_ID('dbo.status', 'U') IS NOT NULL DROP TABLE [dbo].[status];
@@ -9,7 +9,7 @@ IF OBJECT_ID('dbo.localizacao', 'U') IS NOT NULL DROP TABLE [dbo].[localizacao];
 IF OBJECT_ID('dbo.fila', 'U') IS NOT NULL DROP TABLE [dbo].[fila];
 GO
 
--- Exclui o banco de dados se ele já existir parcialmente
+-- 2. Exclui o banco de dados se ele já existir
 IF EXISTS (SELECT name FROM sys.databases WHERE name = N'ChamaJussa')
 BEGIN
     ALTER DATABASE [ChamaJussa] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
@@ -17,49 +17,50 @@ BEGIN
 END
 GO
 
--- 1. Criação do Banco (deixando o SQL Server definir o caminho padrão correto)
+-- 3. Criação do Banco de Dados
 CREATE DATABASE [ChamaJussa]
 GO
-
 ALTER DATABASE [ChamaJussa] SET COMPATIBILITY_LEVEL = 160
 GO
-
 ALTER DATABASE [ChamaJussa] SET AUTO_CLOSE OFF 
 GO
 
--- 2. Seleção do banco criado
 USE [ChamaJussa]
 GO
 
--- 3. Criação das Tabelas
+-- DESATIVA O CACHE DE IDENTITY PARA EVITAR SALTOS DE 1000 EM 1000 NOS IDs
+ALTER DATABASE SCOPED CONFIGURATION SET IDENTITY_CACHE = OFF;
+GO
+
+-- 4. Criação das Tabelas
 CREATE TABLE [dbo].[fila](
-	[fila_id] [int] IDENTITY(1,1) NOT NULL,
-	[nome] [varchar](50) NOT NULL,
+    [fila_id] [int] IDENTITY(1,1) NOT NULL,
+    [nome] [varchar](50) NOT NULL,
     PRIMARY KEY CLUSTERED ([fila_id] ASC)
 )
 GO
 
 CREATE TABLE [dbo].[localizacao](
-	[localizacao_id] [int] IDENTITY(1,1) NOT NULL,
-	[nome] [varchar](50) NOT NULL,
-	[andar] [varchar](15) NOT NULL,
+    [localizacao_id] [int] IDENTITY(1,1) NOT NULL,
+    [nome] [varchar](50) NOT NULL,
+    [andar] [varchar](15) NOT NULL,
     PRIMARY KEY CLUSTERED ([localizacao_id] ASC)
 )
 GO
 
 CREATE TABLE [dbo].[status](
-	[status_id] [int] IDENTITY(1,1) NOT NULL,
-	[nome] [varchar](30) NOT NULL,
+    [status_id] [int] IDENTITY(1,1) NOT NULL,
+    [nome] [varchar](30) NOT NULL,
     PRIMARY KEY CLUSTERED ([status_id] ASC)
 )
 GO
 
 CREATE TABLE [dbo].[usuario](
-	[usuario_id] [uniqueidentifier] NOT NULL DEFAULT (newid()),
-	[nome] [varchar](50) NOT NULL,
-	[email] [varchar](50) NOT NULL,
-	[senha] [varbinary](32) NOT NULL,
-	[nif] [int] NOT NULL,
+    [usuario_id] [uniqueidentifier] NOT NULL DEFAULT (newid()),
+    [nome] [varchar](50) NOT NULL,
+    [email] [varchar](50) NOT NULL,
+    [senha] [varbinary](32) NOT NULL,
+    [nif] [int] NOT NULL,
     PRIMARY KEY CLUSTERED ([usuario_id] ASC),
     CONSTRAINT [UQ_usuario_email] UNIQUE ([email]),
     CONSTRAINT [UQ_usuario_nif] UNIQUE ([nif])
@@ -67,15 +68,15 @@ CREATE TABLE [dbo].[usuario](
 GO
 
 CREATE TABLE [dbo].[OrdemDeServico](
-	[os_id] [int] IDENTITY(1,1) NOT NULL,
-	[nome_item] [varchar](50) NOT NULL,
-	[solicitante] [uniqueidentifier] NULL,
-	[dt_criacao] [datetime] NOT NULL DEFAULT (getdate()),
-	[localizacao_id] [int] NULL,
-	[descricao] [varchar](255) NOT NULL,
-	[imagem] [varchar](max) NULL,
-	[status] [int] NULL,
-	[fila] [int] NULL,
+    [os_id] [int] IDENTITY(1,1) NOT NULL,
+    [nome_item] [varchar](50) NOT NULL,
+    [solicitante] [uniqueidentifier] NULL,
+    [dt_criacao] [datetime] NOT NULL DEFAULT (getdate()),
+    [localizacao_id] [int] NULL,
+    [descricao] [varchar](255) NOT NULL,
+    [imagem] [varchar](max) NULL,
+    [status] [int] NULL,
+    [fila] [int] NULL,
     PRIMARY KEY CLUSTERED ([os_id] ASC),
     CONSTRAINT [FK_OrdemDeServico_Fila] FOREIGN KEY([fila]) REFERENCES [dbo].[fila] ([fila_id]),
     CONSTRAINT [FK_OrdemDeServico_Localizacao] FOREIGN KEY([localizacao_id]) REFERENCES [dbo].[localizacao] ([localizacao_id]),
@@ -84,12 +85,15 @@ CREATE TABLE [dbo].[OrdemDeServico](
 )
 GO
 
--- 4. Inserção dos Dados
+-- 5. Inserção dos Dados Iniciais
+
+-- Filas
 SET IDENTITY_INSERT [dbo].[fila] ON 
 INSERT [dbo].[fila] ([fila_id], [nome]) VALUES (1, N'Geral'), (2, N'Suporte'), (3, N'Manutenção')
 SET IDENTITY_INSERT [dbo].[fila] OFF
 GO
 
+-- Localizações
 SET IDENTITY_INSERT [dbo].[localizacao] ON 
 INSERT [dbo].[localizacao] ([localizacao_id], [nome], [andar]) VALUES 
 (1, N'Sala do Diretor', N'Térreo'),
@@ -109,22 +113,25 @@ INSERT [dbo].[localizacao] ([localizacao_id], [nome], [andar]) VALUES
 SET IDENTITY_INSERT [dbo].[localizacao] OFF
 GO
 
+-- Status
 SET IDENTITY_INSERT [dbo].[status] ON 
-INSERT [dbo].[status] ([status_id], [nome]) VALUES 
-(1, N'Aberto'),
-(2, N'Em andamento'),
-(3, N'Concluído'),
-(4, N'Cancelado')
+INSERT [dbo].[status] ([status_id], [nome]) VALUES (1, N'Aberto'), (2, N'Em andamento'), (3, N'Concluído'), (4, N'Cancelado')
 SET IDENTITY_INSERT [dbo].[status] OFF
 GO
 
+-- Usuário
 INSERT [dbo].[usuario] ([usuario_id], [nome], [email], [senha], [nif]) VALUES 
 (N'8c7b9660-e897-4935-9bb8-dbce3f2ad542', N'samanta', N'samanta@email.com', 0x55A5E9E78207B4DF8699D60886FA070079463547B095D1A05BC719BB4E6CD251, 1234567)
 GO
 
+-- Ordens de Serviço Iniciais (começando de 1)
 SET IDENTITY_INSERT [dbo].[OrdemDeServico] ON 
 INSERT [dbo].[OrdemDeServico] ([os_id], [nome_item], [solicitante], [dt_criacao], [localizacao_id], [descricao], [imagem], [status], [fila]) VALUES 
-(2, N'teste', N'8c7b9660-e897-4935-9bb8-dbce3f2ad542', CAST(N'2026-07-29T19:29:13.713' AS DateTime), 1, N'teste', N'/uploads/os-01c1acbb-b740-467a-ab2e-1eb9b13c91a8.png', 1, 1),
-(3, N'string', N'8c7b9660-e897-4935-9bb8-dbce3f2ad542', CAST(N'2026-07-31T08:18:05.880' AS DateTime), 1, N'string', N'/uploads/os-1fa50191-bbb2-4a6c-8a68-844d9f1061c2.jpg', 1, 1)
+(1, N'teste', N'8c7b9660-e897-4935-9bb8-dbce3f2ad542', CAST(N'2026-07-29T19:29:13.713' AS DateTime), 1, N'teste', N'/uploads/os-01c1acbb-b740-467a-ab2e-1eb9b13c91a8.png', 1, 1),
+(2, N'string', N'8c7b9660-e897-4935-9bb8-dbce3f2ad542', CAST(N'2026-07-31T08:18:05.880' AS DateTime), 1, N'string', N'/uploads/os-1fa50191-bbb2-4a6c-8a68-844d9f1061c2.jpg', 1, 1)
 SET IDENTITY_INSERT [dbo].[OrdemDeServico] OFF
+GO
+
+-- Sincroniza o próximo ID automático da tabela OrdemDeServico para ser exatamente o próximo número (3)
+DBCC CHECKIDENT ('[dbo].[OrdemDeServico]', RESEED);
 GO

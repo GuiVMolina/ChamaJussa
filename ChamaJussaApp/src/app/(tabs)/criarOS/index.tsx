@@ -10,19 +10,21 @@ import {
   ButtonText,
   Card,
   Colors,
+  Column,
   Container,
   H1,
   Input,
   InputArea,
   Label,
+  SafeArea,
   TextArea,
 } from "@/src/constants/theme";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Servico() {
   return (
-    <SafeAreaView style={Container} edges={["left", "right"]}>
-      <ScrollView>
+    <SafeAreaView style={[Container, SafeArea]} edges={["left", "right"]}>
+      <ScrollView contentContainerStyle={Column}>
         <Text style={H1}>Criar ordem de serviço</Text>
         <View style={Card}>
           <View style={InputArea}>

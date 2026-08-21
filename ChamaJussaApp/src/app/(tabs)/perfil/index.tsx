@@ -4,16 +4,18 @@ import {
   Card,
   Center,
   Colors,
+  Column,
   Container,
   H1,
   H4,
+  SafeArea,
 } from "@/src/constants/theme";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 
 export default function Perfil() {
   return (
-    <SafeAreaView style={Container}>
+    <SafeAreaView style={[Container, SafeArea, Column, Center]}>
       <View style={[Card, Center]}>
         <Image source={require("@/assets/img/kessia.png")} />
         <Text style={H1}>Késsia Milena</Text>
