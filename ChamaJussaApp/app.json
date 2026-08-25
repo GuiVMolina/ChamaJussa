@@ -4,8 +4,9 @@
     "slug": "ChamaJussaApp",
     "version": "1.0.0",
     "orientation": "portrait",
+    "scheme": "chamajussaapp",
     "icon": "./assets/img/logo.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/img/logo.png",
@@ -26,9 +27,6 @@
     "web": {
       "favicon": "./assets/img/logo.png"
     },
-    "plugins": [
-      "expo-font",
-      "expo-router"
-    ]
+    "plugins": ["expo-font", "expo-router"]
   }
 }

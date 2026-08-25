@@ -6,24 +6,12 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import {
-  Button,
-  ButtonText,
-  Card,
-  Center,
-  Colors,
-  Column,
-  Container,
-  H1,
-  Input,
-  InputArea,
-  Label,
-  P,
-  SafeArea,
-} from "@/src/constants/theme";
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+import { Colors, theme } from "@/src/constants/theme";
+
 import { autenticacaoService } from "@/src/service/autenticacaoService";
 
 export default function Login() {
@@ -50,27 +38,27 @@ export default function Login() {
   }
 
   return (
-    <SafeAreaView style={[Container, SafeArea]}>
+    <SafeAreaView style={[theme.container, theme.safeArea]}>
       <Image source={require("@/assets/img/logo.png")} />
-      <View style={[Card, Column]}>
-        <View style={Center}>
-          <Text style={H1}>Chama Jussa</Text>
-          <Text style={P}>Gerenciamento de Ordens de Serviço</Text>
+      <View style={[theme.card, theme.column]}>
+        <View style={theme.center}>
+          <Text style={theme.h1}>Chama Jussa</Text>
+          <Text style={theme.p}>Gerenciamento de Ordens de Serviço</Text>
         </View>
 
-        <View style={InputArea}>
-          <Text style={Label}>E-mail</Text>
+        <View style={theme.inputArea}>
+          <Text style={theme.label}>E-mail</Text>
           <TextInput
-            style={Input}
+            style={theme.input}
             placeholder="email@email.com"
             value={email}
             onChangeText={setEmail}
           />
         </View>
-        <View style={InputArea}>
-          <Text style={Label}>Senha</Text>
+        <View style={theme.inputArea}>
+          <Text style={theme.label}>Senha</Text>
           <TextInput
-            style={Input}
+            style={theme.input}
             placeholder="********"
             secureTextEntry
             value={senha}
@@ -78,10 +66,10 @@ export default function Login() {
           />
         </View>
         <TouchableOpacity
-          style={[Button, { backgroundColor: Colors.green }]}
+          style={[theme.button, { backgroundColor: Colors.green }]}
           onPress={acessar}
         >
-          <Text style={ButtonText}>Acessar o sistema</Text>
+          <Text style={theme.buttonText}>Acessar o sistema</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

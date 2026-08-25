@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { OrdemServico } from "../@types";
+
+import { OrdemServico } from "@/src/@types";
 import { ordemServicoService } from "@/src/service/ordemServicoService";
 
 export function useDetalheOS(id?: string) {

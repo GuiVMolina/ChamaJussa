@@ -1,15 +1,17 @@
 import React from "react";
 import { Tabs } from "expo-router";
+import { StyleSheet } from "react-native";
+
 import { Colors } from "@/src/constants/theme";
+
 import AddIcon from "@/assets/svg/AddIcon.svg";
 import BellIcon from "@/assets/svg/BellIcon.svg";
 import ListIcon from "@/assets/svg/ListIcon.svg";
 import ProfileIcon from "@/assets/svg/ProfileIcon.svg";
-import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: Colors.red,
+    backgroundColor: Colors.main,
     borderTopWidth: 0,
     paddingBottom: 8,
     paddingTop: 8,
@@ -32,7 +34,7 @@ export default function TabsLayout() {
         headerShown: false,
         tabBarStyle: styles.tabBar,
         tabBarItemStyle: styles.tabBarItem,
-        tabBarActiveTintColor: Colors.red,
+        tabBarActiveTintColor: Colors.main,
         tabBarInactiveTintColor: Colors.white,
         tabBarActiveBackgroundColor: Colors.white,
         tabBarLabelStyle: styles.tabBarLabel,

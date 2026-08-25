@@ -13,3 +13,16 @@ export interface OrdemServico {
   filaId: number;
   filaNome: string;
 }
+
+export interface ImgUpload {
+  uri: string;
+  name?: string;
+  mimeType?: string;
+}
+
+export interface CriarOrdemServico {
+  nomeItem: string;
+  localizacaoId: string;
+  descricao: string;
+  imagem: ImgUpload | null;
+}

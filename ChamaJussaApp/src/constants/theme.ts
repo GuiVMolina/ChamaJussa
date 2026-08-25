@@ -1,59 +1,68 @@
 import { StyleSheet, TextStyle, ViewStyle } from "react-native";
 
-// ════════════════════════════════ //
-//  1. DESIGN (Cores e Tipografia)  //
-// ════════════════════════════════ //
+// ══════════════════ //
+//  1. DESIGN SYSTEM  //
+// ══════════════════ //
+
+const hsl = 0;
 
 export const Colors = {
-  // Cores Principais
-  bgc: "hsl(0, 25%, 98%)",
-  bgc2: "hsl(0, 25%, 95%)",
-  red: "hsl(0, 75%, 45%)",
-  shadow: "hsla(0, 100%, 15%, 0.5)",
+  // Brand & Backgrounds
+  bgc: `hsl(${hsl}, 25%, 98%)`,
+  bgc2: `hsl(${hsl}, 25%, 95%)`,
+  main: `hsl(${hsl}, 75%, 45%)`,
+  shadow: `hsla(${hsl}, 100%, 15%, 0.5)`,
 
-  // Status & Alertas
-  green: "hsl(140, 70%, 40%)",
-  yellow: "hsl(55, 70%, 50%)",
-  blue: "hsl(220, 85%, 55%)",
-  statusAberta: "hsla(0, 90%, 60%, 0.15)",
-  statusEmAndamento: "hsla(55, 75%, 60%, 0.15)",
-  statusConcluida: "hsla(135, 90%, 60%, 0.15)",
+  // Status & Badges
+  blue: `hsl(220, 85%, 55%)`,
+  green: `hsl(140, 70%, 40%)`,
+  yellow: `hsl(55, 70%, 50%)`,
 
   // Neutros
-  white: "hsl(0, 100%, 100%)",
-  black: "hsl(0, 100%, 5%)",
-  off: "hsl(0, 0%, 96%)",
-  border: "hsl(0, 0%, 80%)",
-  darkerBorder: "hsl(0, 0%, 60%)",
-  inactive: "hsl(0, 40%, 70%)",
+  white: `hsl(${hsl}, 100%, 100%)`,
+  black: `hsl(${hsl}, 100%, 5%)`,
+  off: `hsl(${hsl}, 0%, 96%)`,
+  border: `hsla(${hsl}, 0%, 0%, 0.1)`,
+  darkerBorder: `hsl(${hsl}, 0%, 60%)`,
+  inactive: `hsl(${hsl}, 40%, 70%)`,
 } as const;
 
 export const Font = {
-  regular: "Montserrat_400Regular",
-  semiBold: "Montserrat_600SemiBold",
-  bold: "Montserrat_700Bold",
+  regular: `Montserrat_400Regular`,
+  semiBold: `Montserrat_600SemiBold`,
+  bold: `Montserrat_700Bold`,
 } as const;
 
 // ═════════════════ //
-// 2. ESTILOS BASE   //
+//  2. ESTILOS BASE  //
 // ═════════════════ //
 
 const baseText: TextStyle = {
-  fontFamily: Font.regular,
-  color: Colors.black,
   flexShrink: 1,
+  color: Colors.black,
+  fontFamily: Font.regular,
 };
 
 const baseButton: ViewStyle = {
   height: 50,
+  borderRadius: 18,
   paddingHorizontal: 16,
-  borderRadius: 999,
   alignItems: "center",
   justifyContent: "center",
 };
 
+const baseInput: ViewStyle = {
+  ...baseText,
+  borderWidth: 1,
+  borderRadius: 18,
+  paddingHorizontal: 12,
+  width: "100%",
+  borderColor: Colors.border,
+  backgroundColor: Colors.off,
+};
+
 // ═══════════════ //
-// 3. STYLESHEET   //
+//  3. STYLESHEET  //
 // ═══════════════ //
 
 export const theme = StyleSheet.create({
@@ -72,8 +81,8 @@ export const theme = StyleSheet.create({
   },
   row: {
     gap: 5,
-    alignItems: "center",
     flexDirection: "row",
+    alignItems: "center",
   },
   side: {
     gap: 20,
@@ -88,15 +97,23 @@ export const theme = StyleSheet.create({
   },
   scroll: {
     gap: 10,
-    width: "100%",
     paddingBottom: 20,
   },
   spaceBetween: {
     width: "100%",
+    alignItems: "center",
+    flexDirection: "row",
     justifyContent: "space-between",
+  },
+  width: {
+    width: "100%",
+  },
+  flex: {
+    flex: 1,
   },
   line: {
     height: 2,
+    borderRadius: 999,
     width: "100%",
     backgroundColor: Colors.border,
   },
@@ -104,17 +121,18 @@ export const theme = StyleSheet.create({
     paddingHorizontal: 20,
   },
 
-  // --- Visual & Componentes Gerais ---
+  // --- Visual & Componentes ---
   card: {
-    width: "100%",
     gap: 10,
-    borderRadius: 20,
-    paddingVertical: 40,
-    paddingHorizontal: 20,
-    backgroundColor: Colors.white,
+    padding: 24,
     borderWidth: 1,
+    borderRadius: 24,
+    width: "100%",
     borderColor: Colors.border,
     shadowColor: Colors.shadow,
+    shadowOffset: { width: 0, height: 2 },
+    backgroundColor: Colors.white,
+    shadowRadius: 5,
     elevation: 5,
   },
   status: {
@@ -125,15 +143,14 @@ export const theme = StyleSheet.create({
   },
   img: {
     height: 150,
-    width: "100%",
     borderWidth: 1,
     borderRadius: 10,
+    width: "100%",
     borderColor: Colors.darkerBorder,
   },
   icon: {
     width: 40,
     height: 40,
-    resizeMode: "contain",
   },
 
   // --- Formulários & Inputs ---
@@ -141,25 +158,24 @@ export const theme = StyleSheet.create({
     gap: 5,
   },
   input: {
-    ...baseText,
-    padding: 10,
-    backgroundColor: Colors.off,
-    borderWidth: 1,
-    borderRadius: 999,
-    borderColor: Colors.border,
+    ...baseInput,
   },
   textArea: {
-    height: 160,
+    ...baseInput,
+    minHeight: 96,
+    paddingVertical: 12,
     textAlignVertical: "top",
   },
 
   // --- Botões ---
   button: {
     ...baseButton,
+    backgroundColor: Colors.main,
   },
   buttonOff: {
     ...baseButton,
     borderWidth: 1,
+    backgroundColor: "transparent",
     borderColor: Colors.darkerBorder,
   },
   buttonText: {
@@ -203,47 +219,3 @@ export const theme = StyleSheet.create({
     fontFamily: Font.semiBold,
   },
 });
-
-// ════════════════ //
-// 4. EXPORTAÇÕES   //
-// ════════════════ //
-
-export const {
-  // Layout
-  container: Container,
-  navHeight: NavHeight,
-  center: Center,
-  row: Row,
-  side: Side,
-  column: Column,
-  list: List,
-  scroll: Scroll,
-  spaceBetween: SpaceBetween,
-  line: Line,
-  safeArea: SafeArea,
-
-  // Componentes
-  card: Card,
-  status: Status,
-  img: Img,
-  icon: Icon,
-
-  // Form & Inputs
-  inputArea: InputArea,
-  input: Input,
-  textArea: TextArea,
-
-  // Botões
-  button: Button,
-  buttonOff: ButtonOff,
-  buttonText: ButtonText,
-  buttonTextOff: ButtonTextOff,
-
-  // Tipografia
-  h1: H1,
-  h2: H2,
-  h3: H3,
-  h4: H4,
-  p: P,
-  label: Label,
-} = theme;

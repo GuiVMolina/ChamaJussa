@@ -1,28 +1,20 @@
-import {
-  Button,
-  ButtonText,
-  Card,
-  Center,
-  Colors,
-  Column,
-  Container,
-  H1,
-  H4,
-  SafeArea,
-} from "@/src/constants/theme";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 
+import { Colors, theme } from "@/src/constants/theme";
+
 export default function Perfil() {
   return (
-    <SafeAreaView style={[Container, SafeArea, Column, Center]}>
-      <View style={[Card, Center]}>
+    <SafeAreaView
+      style={[theme.container, theme.safeArea, theme.column, theme.center]}
+    >
+      <View style={[theme.card, theme.center]}>
         <Image source={require("@/assets/img/kessia.png")} />
-        <Text style={H1}>Késsia Milena</Text>
-        <Text style={H4}>kessia@email.com</Text>
+        <Text style={theme.h1}>Késsia Milena</Text>
+        <Text style={theme.h4}>kessia@email.com</Text>
       </View>
-      <TouchableOpacity style={[Button, { backgroundColor: Colors.red }]}>
-        <Text style={ButtonText}>Sair da Conta</Text>
+      <TouchableOpacity style={[theme.button, { backgroundColor: Colors.main }]}>
+        <Text style={theme.buttonText}>Sair da Conta</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

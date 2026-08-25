@@ -1,16 +1,26 @@
-import { View, Text } from "react-native";
-import { Column, Container, H1 } from "@/src/constants/theme";
+import { ScrollView, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+import { theme } from "@/src/constants/theme";
+
 import { NotificacaoCard } from "@/src/components/notificacaoCard/NotificacaoCard";
 
 export default function Notificacao() {
   return (
-    <SafeAreaView style={Container}>
-      <Text style={H1}>Notificações</Text>
-      <View style={Column}>
+    <SafeAreaView
+      style={[theme.container, theme.column, theme.safeArea]}
+      edges={["top", "left", "right"]}
+    >
+      <Text style={theme.h1}>Notificações</Text>
+      <ScrollView
+        contentContainerStyle={theme.scroll}
+        showsVerticalScrollIndicator={false}
+      >
         <NotificacaoCard />
         <NotificacaoCard />
-      </View>
+        <NotificacaoCard />
+        <NotificacaoCard />
+      </ScrollView>
     </SafeAreaView>
   );
 }

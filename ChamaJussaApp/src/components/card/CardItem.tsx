@@ -1,21 +1,19 @@
 import React from "react";
 import { useRouter } from "expo-router";
-import { OrdemServico } from "@/src/@types/ordemServico";
 import { View, Text, TouchableOpacity } from "react-native";
-import {
-  Card,
-  Colors,
-  H1,
-  H2,
-  P,
-  Row,
-  SpaceBetween,
-  Status,
-} from "@/src/constants/theme";
+
+import { theme } from "@/src/constants/theme";
+
+import { OrdemServico } from "@/src/@types/ordemServico";
 
 interface CardItemProps {
   item: OrdemServico;
 }
+
+const aberta = "0, 90%, 60%";
+const andamento = "60, 90%, 60%";
+const concluida = "100, 90%, 60%";
+const opacidade = "0.125";
 
 export const CardItem: React.FC<CardItemProps> = ({ item }) => {
   const router = useRouter();
@@ -24,12 +22,24 @@ export const CardItem: React.FC<CardItemProps> = ({ item }) => {
     const s = status.toLowerCase();
 
     if (s.includes("andamento")) {
-      return { bg: Colors.statusEmAndamento, color: Colors.yellow };
+      return {
+        bg: `hsla(${andamento}, ${opacidade})`,
+        color: `hsl(${andamento})`,
+        borderColor: `hsl(${andamento})`,
+      };
     }
-    if (s.includes("conclu")) {
-      return { bg: Colors.statusConcluida, color: Colors.green };
+    if (s.includes(`conclu`)) {
+      return {
+        bg: `hsla(${concluida}, ${opacidade})`,
+        color: `hsl(${concluida})`,
+        borderColor: `hsl(${concluida})`,
+      };
     }
-    return { bg: Colors.statusAberta, color: Colors.red };
+    return {
+      bg: `hsla(${aberta}, ${opacidade})`,
+      color: `hsl(${aberta})`,
+      borderColor: `hsl(${aberta})`,
+    };
   };
 
   const currentStatus = getStatusStyle(item?.statusNome);
@@ -39,25 +49,25 @@ export const CardItem: React.FC<CardItemProps> = ({ item }) => {
   }
 
   return (
-    <TouchableOpacity style={Card} onPress={handleNavigate}>
-      <View style={[Row, SpaceBetween]}>
-        <Text style={H1}>#{item.osId}</Text>
+    <TouchableOpacity style={theme.card} onPress={handleNavigate}>
+      <View style={[theme.row, theme.spaceBetween]}>
+        <Text style={theme.h1}>#{item.osId}</Text>
         <Text
           style={[
-            Status,
+            theme.status,
             {
-              backgroundColor: currentStatus.bg,
-              color: currentStatus.color,
               borderWidth: 2,
-              borderColor: currentStatus.color,
+              borderColor: currentStatus.borderColor,
+              color: currentStatus.color,
+              backgroundColor: currentStatus.bg,
             },
           ]}
         >
           {item.statusNome ?? "Aberto"}
         </Text>
       </View>
-      <Text style={H2}>{item.nomeItem}</Text>
-      <Text style={P} numberOfLines={2}>
+      <Text style={theme.h2}>{item.nomeItem}</Text>
+      <Text style={theme.p} numberOfLines={2}>
         {item.descricao}
       </Text>
     </TouchableOpacity>

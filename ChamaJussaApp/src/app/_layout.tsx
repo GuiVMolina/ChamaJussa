@@ -1,10 +1,9 @@
 import React from "react";
-import { StyleSheet, ActivityIndicator, View } from "react-native";
-
-// Rotas com Expo-router
 import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { ActivityIndicator, View } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-// Fontes Personalizadas (Montserrat)
 import {
   useFonts,
   Montserrat_400Regular,
@@ -12,12 +11,7 @@ import {
   Montserrat_600SemiBold,
 } from "@expo-google-fonts/montserrat";
 
-// SafeAreaProvider
-import { SafeAreaProvider } from "react-native-safe-area-context";
-
-// Barra de status
-import { StatusBar } from "expo-status-bar";
-import { Colors, Container } from "@/src/constants/theme";
+import { Colors, theme } from "@/src/constants/theme";
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -28,8 +22,8 @@ export default function RootLayout() {
 
   if (!fontsLoaded) {
     return (
-      <View style={Container}>
-        <ActivityIndicator size="large" color={Colors.red} />
+      <View style={theme.container}>
+        <ActivityIndicator size="large" color={Colors.main} />
       </View>
     );
   }
@@ -39,7 +33,7 @@ export default function RootLayout() {
       <StatusBar style="light" />
       <Stack
         screenOptions={{
-          headerStyle: { backgroundColor: Colors.red },
+          headerStyle: { backgroundColor: Colors.main },
           headerTitleStyle: {
             color: Colors.white,
             fontFamily: "Montserrat_700Bold",
