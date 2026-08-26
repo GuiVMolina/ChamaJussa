@@ -7,8 +7,7 @@ export const autenticacaoService = {
     const { data } = await api.post<LoginResponse>("Autenticacao/login", dados);
 
     if (data?.token) {
-      const tokenKey = process.env.EXPO_PUBLIC_TOKEN_KEY || "Token";
-      await AsyncStorage.setItem(tokenKey, data.token);
+      await AsyncStorage.setItem(process.env.EXPO_PUBLIC_TOKEN_KEY, data.token);
     }
 
     return data;

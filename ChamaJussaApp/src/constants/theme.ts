@@ -11,6 +11,7 @@ export const Colors = {
   bgc: `hsl(${hsl}, 25%, 98%)`,
   bgc2: `hsl(${hsl}, 25%, 95%)`,
   main: `hsl(${hsl}, 75%, 45%)`,
+  inactive: `hsla(${hsl}, 75%, 45%, 0.1)`,
   shadow: `hsla(${hsl}, 100%, 15%, 0.5)`,
 
   // Status & Badges
@@ -24,7 +25,6 @@ export const Colors = {
   off: `hsl(${hsl}, 0%, 96%)`,
   border: `hsla(${hsl}, 0%, 0%, 0.1)`,
   darkerBorder: `hsl(${hsl}, 0%, 60%)`,
-  inactive: `hsl(${hsl}, 40%, 70%)`,
 } as const;
 
 export const Font = {
@@ -53,6 +53,7 @@ const baseButton: ViewStyle = {
 
 const baseInput: ViewStyle = {
   ...baseText,
+  height: 56,
   borderWidth: 1,
   borderRadius: 18,
   paddingHorizontal: 12,
@@ -63,7 +64,7 @@ const baseInput: ViewStyle = {
 
 // ═══════════════ //
 //  3. STYLESHEET  //
-// ═══════════════ //
+// ═══════════════ //'
 
 export const theme = StyleSheet.create({
   // --- Layout & Containers ---
@@ -129,9 +130,9 @@ export const theme = StyleSheet.create({
     borderRadius: 24,
     width: "100%",
     borderColor: Colors.border,
+    backgroundColor: Colors.white,
     shadowColor: Colors.shadow,
     shadowOffset: { width: 0, height: 2 },
-    backgroundColor: Colors.white,
     shadowRadius: 5,
     elevation: 5,
   },
@@ -142,29 +143,76 @@ export const theme = StyleSheet.create({
     fontFamily: Font.bold,
   },
   img: {
-    height: 150,
+    flex: 1,
+    minHeight: 240,
     borderWidth: 1,
     borderRadius: 10,
     width: "100%",
-    borderColor: Colors.darkerBorder,
+    alignItems: "center",
+    justifyContent: "center",
+    borderColor: Colors.border,
+  },
+  imgPreview: {
+    width: "100%",
+    height: "100%",
   },
   icon: {
     width: 40,
     height: 40,
   },
+  iconUsuario: {
+    width: 120,
+    height: 120,
+    borderRadius: 40,
+    borderWidth: 4,
+    borderColor: Colors.main,
+    backgroundColor: Colors.inactive,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  iconLetras: {
+    fontSize: 40,
+    color: Colors.main,
+    fontFamily: Font.semiBold,
+  },
 
   // --- Formulários & Inputs ---
   inputArea: {
     gap: 5,
+    width: "100%",
+  },
+  label: {
+    fontSize: 20,
+    fontFamily: Font.semiBold,
+    color: Colors.black,
   },
   input: {
     ...baseInput,
   },
   textArea: {
-    ...baseInput,
-    minHeight: 96,
+    width: "100%",
+    minHeight: 120,
+    borderWidth: 1,
+    borderRadius: 18,
+    paddingHorizontal: 12,
     paddingVertical: 12,
+    borderColor: Colors.border,
+    backgroundColor: Colors.off,
+    color: Colors.black,
+    fontFamily: Font.regular,
+    fontSize: 16,
     textAlignVertical: "top",
+    flexShrink: 0,
+  },
+  // Container do Picker
+  pickerContainer: { ...baseInput },
+  pickerItem: {
+    ...baseText,
+    color: Colors.black,
+  },
+  pickerItemPlaceholder: {
+    ...baseText,
+    color: Colors.darkerBorder,
   },
 
   // --- Botões ---
@@ -213,9 +261,7 @@ export const theme = StyleSheet.create({
     ...baseText,
     fontSize: 16,
   },
-  label: {
-    ...baseText,
-    fontSize: 20,
-    fontFamily: Font.semiBold,
+  textCenter: {
+    textAlign: "center",
   },
 });

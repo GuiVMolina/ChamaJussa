@@ -8,6 +8,7 @@ import AddIcon from "@/assets/svg/AddIcon.svg";
 import BellIcon from "@/assets/svg/BellIcon.svg";
 import ListIcon from "@/assets/svg/ListIcon.svg";
 import ProfileIcon from "@/assets/svg/ProfileIcon.svg";
+import { StatusBar } from "expo-status-bar";
 
 const styles = StyleSheet.create({
   tabBar: {
@@ -29,63 +30,66 @@ const styles = StyleSheet.create({
 
 export default function TabsLayout() {
   return (
-    <Tabs
-      screenOptions={{
-        headerShown: false,
-        tabBarStyle: styles.tabBar,
-        tabBarItemStyle: styles.tabBarItem,
-        tabBarActiveTintColor: Colors.main,
-        tabBarInactiveTintColor: Colors.white,
-        tabBarActiveBackgroundColor: Colors.white,
-        tabBarLabelStyle: styles.tabBarLabel,
-      }}
-    >
-      <Tabs.Screen
-        name="listaOS/index"
-        options={{
-          title: "Minhas OS",
-          tabBarIcon: ({ color }) => (
-            <ListIcon color={color} width={24} height={24} />
-          ),
+    <>
+      <StatusBar style="light" />
+      <Tabs
+        screenOptions={{
+          headerShown: false,
+          tabBarStyle: styles.tabBar,
+          tabBarItemStyle: styles.tabBarItem,
+          tabBarActiveTintColor: Colors.main,
+          tabBarInactiveTintColor: Colors.white,
+          tabBarActiveBackgroundColor: Colors.white,
+          tabBarLabelStyle: styles.tabBarLabel,
         }}
-      />
+      >
+        <Tabs.Screen
+          name="listaOS/index"
+          options={{
+            title: "Minhas OS",
+            tabBarIcon: ({ color }) => (
+              <ListIcon color={color} width={24} height={24} />
+            ),
+          }}
+        />
 
-      <Tabs.Screen
-        name="criarOS/index"
-        options={{
-          title: "Criar OS",
-          tabBarIcon: ({ color }) => (
-            <AddIcon color={color} width={24} height={24} />
-          ),
-        }}
-      />
+        <Tabs.Screen
+          name="criarOS/index"
+          options={{
+            title: "Criar OS",
+            tabBarIcon: ({ color }) => (
+              <AddIcon color={color} width={24} height={24} />
+            ),
+          }}
+        />
 
-      <Tabs.Screen
-        name="notificacao/index"
-        options={{
-          title: "Notificação",
-          tabBarIcon: ({ color }) => (
-            <BellIcon color={color} width={24} height={24} />
-          ),
-        }}
-      />
+        <Tabs.Screen
+          name="notificacao/index"
+          options={{
+            title: "Notificação",
+            tabBarIcon: ({ color }) => (
+              <BellIcon color={color} width={24} height={24} />
+            ),
+          }}
+        />
 
-      <Tabs.Screen
-        name="perfil/index"
-        options={{
-          title: "Perfil",
-          tabBarIcon: ({ color }) => (
-            <ProfileIcon color={color} width={24} height={24} />
-          ),
-        }}
-      />
+        <Tabs.Screen
+          name="perfil/index"
+          options={{
+            title: "Perfil",
+            tabBarIcon: ({ color }) => (
+              <ProfileIcon color={color} width={24} height={24} />
+            ),
+          }}
+        />
 
-      <Tabs.Screen
-        name="detalhe/[id]"
-        options={{
-          href: null,
-        }}
-      />
-    </Tabs>
+        <Tabs.Screen
+          name="detalhe/[id]"
+          options={{
+            href: null,
+          }}
+        />
+      </Tabs>
+    </>
   );
 }

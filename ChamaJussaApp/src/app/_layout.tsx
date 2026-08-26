@@ -1,6 +1,5 @@
 import React from "react";
 import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import { ActivityIndicator, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
@@ -12,6 +11,7 @@ import {
 } from "@expo-google-fonts/montserrat";
 
 import { Colors, theme } from "@/src/constants/theme";
+import { AuthProvider } from "@/src/contexts/AuthContext";
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -29,29 +29,31 @@ export default function RootLayout() {
   }
 
   return (
-    <SafeAreaProvider>
-      <StatusBar style="light" />
-      <Stack
-        screenOptions={{
-          headerStyle: { backgroundColor: Colors.main },
-          headerTitleStyle: {
-            color: Colors.white,
-            fontFamily: "Montserrat_700Bold",
-          },
-          headerTintColor: Colors.white,
-        }}
-      >
-        <Stack.Screen
-          name="login/index"
-          options={{ title: "Login", headerShown: false }}
-        />
-        <Stack.Screen
-          name="(tabs)"
-          options={{
-            title: "Sair",
+    <AuthProvider>
+      <SafeAreaProvider>
+        <Stack
+          screenOptions={{
+            headerStyle: { backgroundColor: Colors.main },
+            headerTitleStyle: {
+              color: Colors.white,
+              fontFamily: "Montserrat_700Bold",
+            },
+            headerTintColor: Colors.white,
+            animation: "fade",
           }}
-        />
-      </Stack>
-    </SafeAreaProvider>
+        >
+          <Stack.Screen
+            name="login/index"
+            options={{ title: "Login", headerShown: false }}
+          />
+          <Stack.Screen
+            name="(tabs)"
+            options={{
+              title: "Sair",
+            }}
+          />
+        </Stack>
+      </SafeAreaProvider>
+    </AuthProvider>
   );
 }

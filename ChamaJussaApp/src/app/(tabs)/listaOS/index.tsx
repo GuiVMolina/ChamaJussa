@@ -9,14 +9,18 @@ import {
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { useAuth } from "@/src/contexts/AuthContext";
 import { Colors, theme } from "@/src/constants/theme";
 import { CardItem } from "@/src/components/card/CardItem";
 import { useOrdemServico } from "@/src/hooks/useOrdemServico";
+import { FormatarNome } from "@/src/utils/formatarNome";
 
-const filtro = ["Todos", "Abertas", "Em Andamento", "Concluídas"];
+const filtro = ["Todos", "Aberto", "Em Andamento", "Concluídas"];
 
 export default function ListaOS() {
   const router = useRouter();
+
+  const { usuario } = useAuth();
   const { os } = useOrdemServico();
 
   const [filtroAtivo, setFiltroAtivo] = useState("Todos");
@@ -30,7 +34,11 @@ export default function ListaOS() {
     <SafeAreaView style={[theme.flex, theme.column]} edges={["top"]}>
       <View style={[theme.row, theme.spaceBetween, theme.safeArea]}>
         <View>
-          <Text style={theme.h3}>Olá, Késsia</Text>
+          <Text style={theme.h3}>
+            {usuario?.nome
+              ? `Olá, ${FormatarNome(usuario.nome)}`
+              : "Não Autenticado"}
+          </Text>
           <Text style={theme.h1}>Minhas OSs</Text>
         </View>
         <TouchableOpacity
@@ -41,35 +49,31 @@ export default function ListaOS() {
         </TouchableOpacity>
       </View>
 
-      <View style={{ height: 50, flexGrow: 0 }}>
-        <ScrollView
-          contentContainerStyle={[theme.scroll, theme.safeArea]}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-        >
-          {filtro.map((itemFiltro) => {
-            const isSelected = filtroAtivo === itemFiltro;
+      <ScrollView
+        contentContainerStyle={[theme.scroll, theme.safeArea]}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+      >
+        {filtro.map((itemFiltro) => {
+          const isSelected = filtroAtivo === itemFiltro;
 
-            return (
-              <TouchableOpacity
-                key={itemFiltro}
-                style={
-                  isSelected
-                    ? [theme.button, { backgroundColor: Colors.main }]
-                    : theme.buttonOff
-                }
-                onPress={() => setFiltroAtivo(itemFiltro)}
-              >
-                <Text
-                  style={isSelected ? theme.buttonText : theme.buttonTextOff}
-                >
-                  {itemFiltro}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </ScrollView>
-      </View>
+          return (
+            <TouchableOpacity
+              key={itemFiltro}
+              style={
+                isSelected
+                  ? [theme.button, { backgroundColor: Colors.main }]
+                  : theme.buttonOff
+              }
+              onPress={() => setFiltroAtivo(itemFiltro)}
+            >
+              <Text style={isSelected ? theme.buttonText : theme.buttonTextOff}>
+                {itemFiltro}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
 
       <FlatList
         data={osFiltradas}

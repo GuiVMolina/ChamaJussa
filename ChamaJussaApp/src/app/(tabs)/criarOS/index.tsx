@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  Image,
 } from "react-native";
 import { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
@@ -17,6 +18,8 @@ import { Colors, theme } from "@/src/constants/theme";
 import { useLocalizacao } from "@/src/hooks/useLocalizacao";
 import { useOrdemServico } from "@/src/hooks/useOrdemServico";
 import { CriarOrdemServico, ImgUpload } from "@/src/@types/ordemServico";
+
+import UploadIcon from "@/assets/svg/UploadIcon.svg";
 
 export default function CriarOS() {
   const [localSelecionado, setLocalSelecionado] = useState<string>("");
@@ -32,7 +35,7 @@ export default function CriarOS() {
   async function handleSalvar() {
     // Validação básica
     if (!nomeItem.trim() || !descricao.trim() || !localSelecionado) {
-      Alert.alert("Atenção", "Preencha todos os campos");
+      Alert.alert("Atenção", "Preencha todos os campos obrigatórios.");
       return;
     }
 
@@ -52,14 +55,12 @@ export default function CriarOS() {
       setLocalSelecionado("");
       setDescricao("");
       setImagem(null);
-      Alert.alert("Cadastro realizado com sucesso!");
+      Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
     }
   }
 
   // 1. Função para abrir a CÂMERA
   async function tirarFoto() {
-    // Pede autorização ao usuário para acessar a câmera física do aparelho.
-    // A propriedade 'granted' retorna 'true' se o usuário aceitou ou 'false' se recusou.
     const { granted } = await ImagePicker.requestCameraPermissionsAsync();
 
     if (!granted) {
@@ -69,17 +70,14 @@ export default function CriarOS() {
       );
       return;
     }
-    // Abre a interface nativa da câmera para o usuário tirar a foto
+
     const resultado = await ImagePicker.launchCameraAsync({
-      allowsEditing: true, // Permite que o usuário corte ou ajuste a foto após o clique
-      quality: 0.7, // Reduz a qualidade da imagem (70%) para não sobrecarregar o upload/banco
+      allowsEditing: true,
+      quality: 0.7,
     });
 
-    // Verifica se o usuário concluiu a foto (não cancelou) e se a imagem foi capturada com sucesso
     if (!resultado.canceled && resultado.assets[0]) {
-      // Pega a foto que acabou de ser tirada
       const foto = resultado.assets[0];
-      // Atualiza o estado 'imagem' com os dados necessários para o envio (FormData/API)
       setImagem({
         uri: foto.uri,
         name: foto.fileName || `foto_${Date.now()}.jpg`,
@@ -96,13 +94,13 @@ export default function CriarOS() {
       Alert.alert("Permissão necessária", "Permita o acesso à galeria.");
       return;
     }
-    // Abre a galeria de fotos do celular
+
     const resultado = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       quality: 0.7,
     });
-    // Se o usuário selecionou uma foto e não fechou a galeria sem escolher
+
     if (!resultado.canceled && resultado.assets[0]) {
       const foto = resultado.assets[0];
       setImagem({
@@ -124,13 +122,13 @@ export default function CriarOS() {
 
   return (
     <SafeAreaView
-      style={[theme.container, theme.column, theme.safeArea]}
+      style={[theme.container, theme.safeArea]}
       edges={["top", "left", "right"]}
     >
       <Text style={theme.h1}>Criar ordem de serviço</Text>
       <ScrollView
         style={theme.width}
-        contentContainerStyle={[theme.card, theme.column]}
+        contentContainerStyle={[theme.card, theme.scroll, {paddingBottom: 40}]}
         showsVerticalScrollIndicator={false}
       >
         <View style={theme.inputArea}>
@@ -142,37 +140,66 @@ export default function CriarOS() {
             onChangeText={setNomeItem}
           />
         </View>
+
         <View style={theme.inputArea}>
           <Text style={theme.label}>Local / Setor</Text>
-          <Picker
-            selectedValue={localSelecionado}
-            onValueChange={(itemValue) => setLocalSelecionado(itemValue)}
-          >
-            <Picker.Item label="Selecione o local/setor..." value="" />
-            {locais.map((local) => (
+          <View style={theme.pickerContainer}>
+            <Picker
+              selectedValue={localSelecionado}
+              onValueChange={(itemValue) => setLocalSelecionado(itemValue)}
+              dropdownIconColor={Colors.darkerBorder}
+            >
               <Picker.Item
-                label={`${local.nome} - ${local.andar}`}
-                value={local.localizacao_id}
+                label="Selecione o local/setor..."
+                value=""
+                style={theme.pickerItemPlaceholder}
               />
-            ))}
-          </Picker>
+              {locais.map((local) => (
+                <Picker.Item
+                  key={local.localizacao_id}
+                  label={`${local.nome} - ${local.andar}`}
+                  value={local.localizacao_id}
+                  style={theme.pickerItem}
+                />
+              ))}
+            </Picker>
+          </View>
         </View>
+
         <View style={theme.inputArea}>
           <Text style={theme.label}>Descrição do problema</Text>
           <TextInput
-            style={[theme.input, theme.textArea]}
+            style={theme.textArea}
             placeholder="Ex: Vazamento da pia"
             multiline={true}
             value={descricao}
             onChangeText={setDescricao}
           />
         </View>
+
         <View style={theme.inputArea}>
           <Text style={theme.label}>Imagem / Foto do problema</Text>
-          <TextInput style={theme.input} placeholder="" />
+          <TouchableOpacity onPress={selecionarOpcaoImagem} activeOpacity={0.8}>
+            <View style={theme.img}>
+              {imagem?.uri ? (
+                <Image
+                  source={{ uri: imagem.uri }}
+                  style={theme.imgPreview}
+                  resizeMode="cover"
+                />
+              ) : (
+                <View style={theme.row}>
+                  <UploadIcon color={Colors.darkerBorder} />
+                  <Text style={theme.p}>Insira a imagem</Text>
+                </View>
+              )}
+            </View>
+          </TouchableOpacity>
         </View>
+
         <TouchableOpacity
           style={[theme.button, { backgroundColor: Colors.green }]}
+          onPress={handleSalvar}
         >
           <Text style={theme.buttonText}>Abrir Ordem de Serviço</Text>
         </TouchableOpacity>
