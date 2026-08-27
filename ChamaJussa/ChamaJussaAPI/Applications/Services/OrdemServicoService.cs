@@ -69,10 +69,10 @@ namespace ChamaJussaAPI.Applications.Services
                 solicitante = usuarioId,
                 dt_criacao = DateTime.Now,
                 localizacao_id = osDto.LocalizacaoId,
+                fila = osDto.FilaId,
                 descricao = osDto.Descricao,
                 imagem = urlImagem,
                 status = statusIdInicial,
-                fila = osDto.FilaId
             };
 
             _repository.Adicionar(os);

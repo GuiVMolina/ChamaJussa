@@ -4,20 +4,22 @@ import { StyleSheet, TextStyle, ViewStyle } from "react-native";
 //  1. DESIGN SYSTEM  //
 // ══════════════════ //
 
-const hsl = 0;
+const hsl = "0";
 
 export const Colors = {
   // Brand & Backgrounds
   bgc: `hsl(${hsl}, 25%, 98%)`,
   bgc2: `hsl(${hsl}, 25%, 95%)`,
-  main: `hsl(${hsl}, 75%, 45%)`,
-  inactive: `hsla(${hsl}, 75%, 45%, 0.1)`,
+  main: `hsl(${hsl}, 75%, 40%)`,
+  inactive: `hsla(${hsl}, 75%, 40%, 0.1)`,
   shadow: `hsla(${hsl}, 100%, 15%, 0.5)`,
 
   // Status & Badges
-  blue: `hsl(220, 85%, 55%)`,
-  green: `hsl(140, 70%, 40%)`,
-  yellow: `hsl(55, 70%, 50%)`,
+  red: `hsl(0, 75%, 40%)`,
+  purple: `hsl(270, 75%, 40%)`,
+  blue: `hsl(220, 75%, 40%)`,
+  green: `hsl(140, 75%, 40%)`,
+  yellow: `hsl(55, 75%, 40%)`,
 
   // Neutros
   white: `hsl(${hsl}, 100%, 100%)`,
@@ -25,13 +27,13 @@ export const Colors = {
   off: `hsl(${hsl}, 0%, 96%)`,
   border: `hsla(${hsl}, 0%, 0%, 0.1)`,
   darkerBorder: `hsl(${hsl}, 0%, 60%)`,
-} as const;
+};
 
 export const Font = {
   regular: `Montserrat_400Regular`,
   semiBold: `Montserrat_600SemiBold`,
   bold: `Montserrat_700Bold`,
-} as const;
+};
 
 // ═════════════════ //
 //  2. ESTILOS BASE  //
@@ -148,6 +150,7 @@ export const theme = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     width: "100%",
+    height: "100%",
     alignItems: "center",
     justifyContent: "center",
     borderColor: Colors.border,

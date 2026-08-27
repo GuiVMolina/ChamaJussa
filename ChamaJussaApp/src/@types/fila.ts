@@ -1,4 +1,4 @@
 export interface Fila {
-  fila_id: number;
+  filaId: number;
   nome: string;
 }

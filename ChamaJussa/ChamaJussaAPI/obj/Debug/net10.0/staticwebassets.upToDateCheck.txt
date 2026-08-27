@@ -17,3 +17,4 @@ wwwroot\uploads\os-f7d35e2f-a07e-4790-9eb6-0ca0aaf657e5.jpeg
 wwwroot\uploads\os-94e61680-ab69-4db0-858a-38872cecc1a8.jpeg
 wwwroot\uploads\os-be604bc6-4d27-4543-8ffe-7e16293a8e01.jpeg
 wwwroot\uploads\os-b4bc9fc2-efe7-4aad-9fed-5d3fdcfc9929.jpg
+wwwroot\uploads\os-7cd3eb39-1ff3-4bef-8625-319562502c43.jpg

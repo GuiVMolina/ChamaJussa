@@ -7,7 +7,7 @@ import {
   Alert,
   Image,
 } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Picker } from "@react-native-picker/picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -27,11 +27,15 @@ export default function CriarOS() {
 
   // Formulário
   const [nomeItem, setNomeItem] = useState("");
-  const [descricao, setDescricao] = useState("");
+
   const [localSelecionado, setLocalSelecionado] = useState<string>("");
   const locais = useLocalizacao();
+
   const [filaSelecionada, setFilaSelecionada] = useState<string>("");
   const filas = useFila();
+
+  const [descricao, setDescricao] = useState("");
+
   const [imagem, setImagem] = useState<ImgUpload | null>(null);
 
   async function handleSalvar() {
@@ -45,6 +49,7 @@ export default function CriarOS() {
     const novaOs: CriarOrdemServico = {
       nomeItem: nomeItem,
       localizacaoId: localSelecionado,
+      filaId: filaSelecionada,
       descricao: descricao,
       imagem: imagem,
     };
@@ -55,6 +60,7 @@ export default function CriarOS() {
     if (sucesso) {
       setNomeItem("");
       setLocalSelecionado("");
+      setFilaSelecionada("");
       setDescricao("");
       setImagem(null);
       Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
@@ -128,112 +134,114 @@ export default function CriarOS() {
       edges={["top", "left", "right"]}
     >
       <Text style={theme.h1}>Criar ordem de serviço</Text>
+
       <ScrollView
         style={theme.width}
-        contentContainerStyle={[
-          theme.card,
-          theme.scroll,
-          { paddingBottom: 40 },
-        ]}
+        contentContainerStyle={[theme.scroll]}
         showsVerticalScrollIndicator={false}
       >
-        <View style={theme.inputArea}>
-          <Text style={theme.label}>Título do problema</Text>
-          <TextInput
-            style={theme.input}
-            placeholder="Ex: Vazamento da pia"
-            value={nomeItem}
-            onChangeText={setNomeItem}
-          />
-        </View>
-
-        <View style={theme.inputArea}>
-          <Text style={theme.label}>Local / Setor</Text>
-          <View style={theme.pickerContainer}>
-            <Picker
-              selectedValue={localSelecionado}
-              onValueChange={(itemValue) => setLocalSelecionado(itemValue)}
-              dropdownIconColor={Colors.darkerBorder}
-            >
-              <Picker.Item
-                label="Selecione o local/setor..."
-                value=""
-                style={theme.pickerItemPlaceholder}
-              />
-              {locais.map((local) => (
-                <Picker.Item
-                  key={local.localizacao_id}
-                  label={`${local.nome} - ${local.andar}`}
-                  value={local.localizacao_id}
-                  style={theme.pickerItem}
-                />
-              ))}
-            </Picker>
+        <View style={theme.card}>
+          <View style={theme.inputArea}>
+            <Text style={theme.label}>Título do problema</Text>
+            <TextInput
+              style={theme.input}
+              placeholder="Ex: Vazamento da pia"
+              value={nomeItem}
+              onChangeText={setNomeItem}
+            />
           </View>
-        </View>
 
-        <View style={theme.inputArea}>
-          <Text style={theme.label}>Fila</Text>
-          <View style={theme.pickerContainer}>
-            <Picker
-              selectedValue={filaSelecionada}
-              onValueChange={(itemValue) => setFilaSelecionada(itemValue)}
-              dropdownIconColor={Colors.darkerBorder}
-            >
-              <Picker.Item
-                label="Selecione a fila..."
-                value=""
-                style={theme.pickerItemPlaceholder}
-              />
-              {filas.map((fila) => (
+          <View style={theme.inputArea}>
+            <Text style={theme.label}>Local / Setor</Text>
+            <View style={theme.pickerContainer}>
+              <Picker
+                selectedValue={localSelecionado}
+                onValueChange={(itemValue) => setLocalSelecionado(itemValue)}
+                dropdownIconColor={Colors.darkerBorder}
+              >
                 <Picker.Item
-                  key={fila.fila_id}
-                  label={fila.nome}
-                  value={fila.fila_id}
-                  style={theme.pickerItem}
+                  label="Selecione o local/setor..."
+                  value=""
+                  style={theme.pickerItemPlaceholder}
                 />
-              ))}
-            </Picker>
-          </View>
-        </View>
-
-        <View style={theme.inputArea}>
-          <Text style={theme.label}>Descrição do problema</Text>
-          <TextInput
-            style={theme.textArea}
-            placeholder="Ex: Vazamento da pia"
-            multiline={true}
-            value={descricao}
-            onChangeText={setDescricao}
-          />
-        </View>
-
-        <View style={theme.inputArea}>
-          <Text style={theme.label}>Imagem / Foto do problema</Text>
-          <TouchableOpacity onPress={selecionarOpcaoImagem} activeOpacity={0.8}>
-            <View style={theme.img}>
-              {imagem?.uri ? (
-                <Image
-                  source={{ uri: imagem.uri }}
-                  style={theme.imgPreview}
-                  resizeMode="cover"
-                />
-              ) : (
-                <View style={theme.row}>
-                  <UploadIcon color={Colors.darkerBorder} />
-                  <Text style={theme.p}>Insira a imagem</Text>
-                </View>
-              )}
+                {locais.map((local) => (
+                  <Picker.Item
+                    key={local.localizacao_id}
+                    label={`${local.nome} - ${local.andar}`}
+                    value={local.localizacao_id}
+                    style={theme.pickerItem}
+                  />
+                ))}
+              </Picker>
             </View>
+          </View>
+
+          <View style={theme.inputArea}>
+            <Text style={theme.label}>Fila</Text>
+            <View style={theme.pickerContainer}>
+              <Picker
+                selectedValue={filaSelecionada}
+                onValueChange={(itemValue) => setFilaSelecionada(itemValue)}
+                dropdownIconColor={Colors.darkerBorder}
+              >
+                <Picker.Item
+                  label="Selecione a fila..."
+                  value=""
+                  style={theme.pickerItemPlaceholder}
+                />
+                {filas.map((fila) => (
+                  <Picker.Item
+                    key={fila.filaId}
+                    label={fila.nome}
+                    value={fila.filaId}
+                    style={theme.pickerItem}
+                  />
+                ))}
+              </Picker>
+            </View>
+          </View>
+
+          <View style={theme.inputArea}>
+            <Text style={theme.label}>Descrição do problema</Text>
+            <TextInput
+              style={theme.textArea}
+              placeholder="Ex: Vazamento da pia"
+              multiline={true}
+              value={descricao}
+              onChangeText={setDescricao}
+            />
+          </View>
+
+          <View style={theme.inputArea}>
+            <Text style={theme.label}>Imagem / Foto do problema</Text>
+            <TouchableOpacity
+              onPress={selecionarOpcaoImagem}
+              activeOpacity={0.8}
+            >
+              <View style={theme.img}>
+                {imagem?.uri ? (
+                  <Image
+                    source={{ uri: imagem.uri }}
+                    style={theme.imgPreview}
+                    resizeMode="cover"
+                  />
+                ) : (
+                  <View style={theme.row}>
+                    <UploadIcon color={Colors.darkerBorder} />
+                    <Text style={theme.p}>Insira a imagem</Text>
+                  </View>
+                )}
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <TouchableOpacity
+            style={[theme.button, { backgroundColor: Colors.green }]}
+            onPress={handleSalvar}
+          >
+            <Text style={theme.buttonText}>Abrir Ordem de Serviço</Text>
           </TouchableOpacity>
         </View>
-
-        <TouchableOpacity
-          style={[theme.button, { backgroundColor: Colors.green }]}
-          onPress={handleSalvar}
-        >
-          <Text style={theme.buttonText}>Abrir Ordem de Serviço</Text>
-        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );

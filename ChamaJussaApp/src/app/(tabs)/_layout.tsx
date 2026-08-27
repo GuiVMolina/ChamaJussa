@@ -1,45 +1,29 @@
 import React from "react";
 import { Tabs } from "expo-router";
 import { StyleSheet } from "react-native";
+import { StatusBar } from "expo-status-bar";
 
-import { Colors } from "@/src/constants/theme";
+import { useTheme } from "@/src/contexts/ThemeContext";
 
 import AddIcon from "@/assets/svg/AddIcon.svg";
 import BellIcon from "@/assets/svg/BellIcon.svg";
 import ListIcon from "@/assets/svg/ListIcon.svg";
 import ProfileIcon from "@/assets/svg/ProfileIcon.svg";
-import { StatusBar } from "expo-status-bar";
-
-const styles = StyleSheet.create({
-  tabBar: {
-    backgroundColor: Colors.main,
-    borderTopWidth: 0,
-    paddingBottom: 8,
-    paddingTop: 8,
-  },
-  tabBarItem: {
-    borderRadius: 16,
-    marginHorizontal: 8,
-    overflow: "hidden",
-  },
-  tabBarLabel: {
-    fontSize: 12,
-    fontFamily: "Montserrat_700Bold",
-  },
-});
 
 export default function TabsLayout() {
+  const { colors } = useTheme();
+
   return (
     <>
       <StatusBar style="light" />
       <Tabs
         screenOptions={{
           headerShown: false,
-          tabBarStyle: styles.tabBar,
+          tabBarStyle: [styles.tabBar, { backgroundColor: colors.main }],
           tabBarItemStyle: styles.tabBarItem,
-          tabBarActiveTintColor: Colors.main,
-          tabBarInactiveTintColor: Colors.white,
-          tabBarActiveBackgroundColor: Colors.white,
+          tabBarActiveTintColor: colors.main,
+          tabBarInactiveTintColor: colors.white,
+          tabBarActiveBackgroundColor: colors.white,
           tabBarLabelStyle: styles.tabBarLabel,
         }}
       >
@@ -93,3 +77,20 @@ export default function TabsLayout() {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBar: {
+    borderTopWidth: 0,
+    paddingBottom: 8,
+    paddingTop: 8,
+  },
+  tabBarItem: {
+    borderRadius: 16,
+    marginHorizontal: 8,
+    overflow: "hidden",
+  },
+  tabBarLabel: {
+    fontSize: 12,
+    fontFamily: "Montserrat_700Bold",
+  },
+});

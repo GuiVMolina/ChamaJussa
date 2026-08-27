@@ -53,68 +53,76 @@ export default function Detalhe() {
       edges={["top", "left", "right"]}
     >
       <Text style={theme.h1}>Detalhes da {osIdentificador}</Text>
+
       <ScrollView
         style={theme.width}
-        contentContainerStyle={[theme.scroll, theme.card]}
+        contentContainerStyle={theme.scroll}
         showsVerticalScrollIndicator={false}
       >
-        <View>
-          <Text style={theme.h2}>{ordem.nomeItem}</Text>
-          <Text style={theme.p}>Criada em {dataCriacaoFormatada}</Text>
-        </View>
-
-        <View style={theme.list}>
-          <View style={theme.side}>
-            <ConfigIcon color={Colors.yellow} width={32} height={32} />
-            <View style={theme.flex}>
-              <Text style={theme.p}>Máquina / Equipamento</Text>
-              <Text style={theme.h3}>{ordem.nomeItem ?? "Não informado"}</Text>
-            </View>
-          </View>
-
-          <View style={theme.side}>
-            <LocalIcon color={Colors.blue} width={32} height={32} />
-            <View style={theme.flex}>
-              <Text style={theme.p}>Local / Setor</Text>
-              <Text style={theme.h3}>
-                {ordem.localizacaoNome ?? "Local não informado"}
-              </Text>
-            </View>
-          </View>
-
-          <View style={theme.side}>
-            <ProfileIcon color={Colors.green} width={32} height={32} />
-            <View style={theme.flex}>
-              <Text style={theme.p}>Solicitante</Text>
-              <Text style={theme.h3}>
-                {ordem.solicitanteNome ?? "Usuário desconhecido"}
-              </Text>
-            </View>
-          </View>
-        </View>
-        <View style={theme.line} />
-        <View style={theme.column}>
-          <View style={theme.flex}>
-            <Text style={theme.h2}>Descrição do Problema</Text>
-            <Text style={theme.p}>{ordem.descricao}</Text>
-          </View>
-
+        <View style={theme.card}>
           <View>
-            <Text style={theme.h2}>Foto do problema</Text>
-            <Image
-              source={
-                imagemUrl
-                  ? { uri: imagemUrl }
-                  : require("@/assets/img/cadeiraQuebrada.png")
-              }
-              style={theme.img}
-              resizeMode="cover"
-            />
+            <Text style={theme.h2}>{ordem.nomeItem}</Text>
+            <Text style={theme.p}>Criada em {dataCriacaoFormatada}</Text>
           </View>
+
+          <View style={theme.list}>
+            <View style={theme.side}>
+              <ConfigIcon color={Colors.yellow} width={32} height={32} />
+              <View style={theme.flex}>
+                <Text style={theme.p}>Fila</Text>
+                <Text style={theme.h3}>
+                  {ordem.filaNome ?? "Não informado"}
+                </Text>
+              </View>
+            </View>
+
+            <View style={theme.side}>
+              <LocalIcon color={Colors.blue} width={32} height={32} />
+              <View style={theme.flex}>
+                <Text style={theme.p}>Local / Setor</Text>
+                <Text style={theme.h3}>
+                  {ordem.localizacaoNome ?? "Local não informado"}
+                </Text>
+              </View>
+            </View>
+
+            <View style={theme.side}>
+              <ProfileIcon color={Colors.green} width={32} height={32} />
+              <View style={theme.flex}>
+                <Text style={theme.p}>Solicitante</Text>
+                <Text style={theme.h3}>
+                  {ordem.solicitanteNome ?? "Usuário desconhecido"}
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={theme.line} />
+
+          <View style={theme.column}>
+            <View style={theme.flex}>
+              <Text style={theme.h2}>Descrição do Problema</Text>
+              <Text style={theme.p}>{ordem.descricao}</Text>
+            </View>
+
+            <View>
+              <Text style={theme.h2}>Foto do problema</Text>
+              <Image
+                source={
+                  imagemUrl
+                    ? { uri: imagemUrl }
+                    : require("@/assets/img/cadeiraQuebrada.png")
+                }
+                style={theme.img}
+                resizeMode="cover"
+              />
+            </View>
+          </View>
+
+          <TouchableOpacity style={theme.button}>
+            <Text style={theme.buttonText}>Editar Solicitação</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity style={theme.button}>
-          <Text style={theme.buttonText}>Editar Solicitação</Text>
-        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );

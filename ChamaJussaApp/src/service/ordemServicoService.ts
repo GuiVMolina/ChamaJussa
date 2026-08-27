@@ -21,6 +21,7 @@ export const ordemServicoService = {
 
     formData.append("NomeItem", dados.nomeItem);
     formData.append("LocalizacaoId", String(dados.localizacaoId));
+    formData.append("FilaId", String(dados.filaId));
     formData.append("Descricao", dados.descricao);
 
     if (dados.imagem) {

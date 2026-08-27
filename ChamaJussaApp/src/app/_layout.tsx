@@ -10,8 +10,37 @@ import {
   Montserrat_600SemiBold,
 } from "@expo-google-fonts/montserrat";
 
-import { Colors, theme } from "@/src/constants/theme";
 import { AuthProvider } from "@/src/contexts/AuthContext";
+import { ThemeProvider, useTheme } from "@/src/contexts/ThemeContext";
+
+function AppContent() {
+  const { colors } = useTheme();
+
+  return (
+    <Stack
+      screenOptions={{
+        headerStyle: { backgroundColor: colors.main },
+        headerTitleStyle: {
+          color: colors.white,
+          fontFamily: "Montserrat_700Bold",
+        },
+        headerTintColor: colors.white,
+        animation: "fade",
+      }}
+    >
+      <Stack.Screen
+        name="login/index"
+        options={{ title: "Login", headerShown: false }}
+      />
+      <Stack.Screen
+        name="(tabs)"
+        options={{
+          title: "Sair",
+        }}
+      />
+    </Stack>
+  );
+}
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -22,38 +51,19 @@ export default function RootLayout() {
 
   if (!fontsLoaded) {
     return (
-      <View style={theme.container}>
-        <ActivityIndicator size="large" color={Colors.main} />
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
       </View>
     );
   }
 
   return (
     <AuthProvider>
-      <SafeAreaProvider>
-        <Stack
-          screenOptions={{
-            headerStyle: { backgroundColor: Colors.main },
-            headerTitleStyle: {
-              color: Colors.white,
-              fontFamily: "Montserrat_700Bold",
-            },
-            headerTintColor: Colors.white,
-            animation: "fade",
-          }}
-        >
-          <Stack.Screen
-            name="login/index"
-            options={{ title: "Login", headerShown: false }}
-          />
-          <Stack.Screen
-            name="(tabs)"
-            options={{
-              title: "Sair",
-            }}
-          />
-        </Stack>
-      </SafeAreaProvider>
+      <ThemeProvider>
+        <SafeAreaProvider>
+          <AppContent />
+        </SafeAreaProvider>
+      </ThemeProvider>
     </AuthProvider>
   );
 }

@@ -23,6 +23,7 @@ export interface ImgUpload {
 export interface CriarOrdemServico {
   nomeItem: string;
   localizacaoId: string;
+  filaId: string | number;
   descricao: string;
   imagem: ImgUpload | null;
 }
