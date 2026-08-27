@@ -6,5 +6,6 @@ namespace ChamaJussaAPI.DTOs.OrdemServicoDto
         public int? LocalizacaoId { get; set; }
         public string Descricao { get; set; } = null!;
         public IFormFile? Imagem { get; set; }
+        public int? FilaId { get; set; }
     }
 }

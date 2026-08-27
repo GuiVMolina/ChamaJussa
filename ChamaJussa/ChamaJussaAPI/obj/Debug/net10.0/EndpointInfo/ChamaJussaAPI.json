@@ -300,6 +300,10 @@
                   "Imagem": {
                     "type": "string",
                     "format": "binary"
+                  },
+                  "FilaId": {
+                    "type": "integer",
+                    "format": "int32"
                   }
                 }
               },
@@ -314,6 +318,9 @@
                   "style": "form"
                 },
                 "Imagem": {
+                  "style": "form"
+                },
+                "FilaId": {
                   "style": "form"
                 }
               }

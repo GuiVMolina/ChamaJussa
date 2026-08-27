@@ -34,7 +34,7 @@ public partial class ChamaJussaContext : DbContext
     {
         modelBuilder.Entity<OrdemDeServico>(entity =>
         {
-            entity.HasKey(e => e.os_id).HasName("PK__OrdemDeS__374FA4B576C4DFB3");
+            entity.HasKey(e => e.os_id).HasName("PK__OrdemDeS__374FA4B54811F743");
 
             entity.Property(e => e.descricao)
                 .HasMaxLength(255)
@@ -66,7 +66,7 @@ public partial class ChamaJussaContext : DbContext
 
         modelBuilder.Entity<fila>(entity =>
         {
-            entity.HasKey(e => e.fila_id).HasName("PK__fila__79CFDF233BAFD4B5");
+            entity.HasKey(e => e.fila_id).HasName("PK__fila__79CFDF23B0207D8F");
 
             entity.Property(e => e.nome)
                 .HasMaxLength(50)
@@ -75,7 +75,7 @@ public partial class ChamaJussaContext : DbContext
 
         modelBuilder.Entity<localizacao>(entity =>
         {
-            entity.HasKey(e => e.localizacao_id).HasName("PK__localiza__91EC50FD5DAD4DE5");
+            entity.HasKey(e => e.localizacao_id).HasName("PK__localiza__91EC50FD6A420556");
 
             entity.Property(e => e.andar)
                 .HasMaxLength(15)
@@ -87,7 +87,7 @@ public partial class ChamaJussaContext : DbContext
 
         modelBuilder.Entity<status>(entity =>
         {
-            entity.HasKey(e => e.status_id).HasName("PK__status__3683B5318CCEC6FD");
+            entity.HasKey(e => e.status_id).HasName("PK__status__3683B53128FFA421");
 
             entity.Property(e => e.nome)
                 .HasMaxLength(30)
@@ -96,7 +96,7 @@ public partial class ChamaJussaContext : DbContext
 
         modelBuilder.Entity<usuario>(entity =>
         {
-            entity.HasKey(e => e.usuario_id).HasName("PK__usuario__2ED7D2AFC71E800F");
+            entity.HasKey(e => e.usuario_id).HasName("PK__usuario__2ED7D2AF7090D8FB");
 
             entity.HasIndex(e => e.email, "UQ_usuario_email").IsUnique();
 
@@ -104,9 +104,6 @@ public partial class ChamaJussaContext : DbContext
 
             entity.Property(e => e.usuario_id).HasDefaultValueSql("(newid())");
             entity.Property(e => e.email)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.nome)
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.senha).HasMaxLength(32);

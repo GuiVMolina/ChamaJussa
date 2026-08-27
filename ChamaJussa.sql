@@ -57,7 +57,7 @@ GO
 
 CREATE TABLE [dbo].[usuario](
     [usuario_id] [uniqueidentifier] NOT NULL DEFAULT (newid()),
-    [nome] [varchar](50) NOT NULL,
+    [nome] [nvarchar](max) NOT NULL,
     [email] [varchar](50) NOT NULL,
     [senha] [varbinary](32) NOT NULL,
     [nif] [int] NOT NULL,

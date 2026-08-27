@@ -72,7 +72,7 @@ namespace ChamaJussaAPI.Applications.Services
                 descricao = osDto.Descricao,
                 imagem = urlImagem,
                 status = statusIdInicial,
-                fila = filaIdInicial
+                fila = osDto.FilaId
             };
 
             _repository.Adicionar(os);
