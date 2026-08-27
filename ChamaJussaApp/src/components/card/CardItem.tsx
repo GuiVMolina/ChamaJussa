@@ -67,7 +67,7 @@ export const CardItem: React.FC<CardItemProps> = ({ item }) => {
         </Text>
       </View>
       <Text style={theme.h2}>{item.nomeItem}</Text>
-      <Text style={theme.p} numberOfLines={2}>
+      <Text style={theme.p} numberOfLines={4}>
         {item.descricao}
       </Text>
     </TouchableOpacity>

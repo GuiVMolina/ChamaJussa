@@ -20,16 +20,18 @@ import { useOrdemServico } from "@/src/hooks/useOrdemServico";
 import { CriarOrdemServico, ImgUpload } from "@/src/@types/ordemServico";
 
 import UploadIcon from "@/assets/svg/UploadIcon.svg";
+import { useFila } from "@/src/hooks/useFila";
 
 export default function CriarOS() {
-  const [localSelecionado, setLocalSelecionado] = useState<string>("");
-  const locais = useLocalizacao();
-
   const { cadastrarOs } = useOrdemServico();
 
   // Formulário
   const [nomeItem, setNomeItem] = useState("");
   const [descricao, setDescricao] = useState("");
+  const [localSelecionado, setLocalSelecionado] = useState<string>("");
+  const locais = useLocalizacao();
+  const [filaSelecionada, setFilaSelecionada] = useState<string>("");
+  const filas = useFila();
   const [imagem, setImagem] = useState<ImgUpload | null>(null);
 
   async function handleSalvar() {
@@ -128,7 +130,11 @@ export default function CriarOS() {
       <Text style={theme.h1}>Criar ordem de serviço</Text>
       <ScrollView
         style={theme.width}
-        contentContainerStyle={[theme.card, theme.scroll, {paddingBottom: 40}]}
+        contentContainerStyle={[
+          theme.card,
+          theme.scroll,
+          { paddingBottom: 40 },
+        ]}
         showsVerticalScrollIndicator={false}
       >
         <View style={theme.inputArea}>
@@ -159,6 +165,31 @@ export default function CriarOS() {
                   key={local.localizacao_id}
                   label={`${local.nome} - ${local.andar}`}
                   value={local.localizacao_id}
+                  style={theme.pickerItem}
+                />
+              ))}
+            </Picker>
+          </View>
+        </View>
+
+        <View style={theme.inputArea}>
+          <Text style={theme.label}>Fila</Text>
+          <View style={theme.pickerContainer}>
+            <Picker
+              selectedValue={filaSelecionada}
+              onValueChange={(itemValue) => setFilaSelecionada(itemValue)}
+              dropdownIconColor={Colors.darkerBorder}
+            >
+              <Picker.Item
+                label="Selecione a fila..."
+                value=""
+                style={theme.pickerItemPlaceholder}
+              />
+              {filas.map((fila) => (
+                <Picker.Item
+                  key={fila.fila_id}
+                  label={fila.nome}
+                  value={fila.fila_id}
                   style={theme.pickerItem}
                 />
               ))}

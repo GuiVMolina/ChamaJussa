@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
   FlatList,
   View,
@@ -6,14 +6,15 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { useAuth } from "@/src/contexts/AuthContext";
 import { Colors, theme } from "@/src/constants/theme";
+
+import { useAuth } from "@/src/contexts/AuthContext";
+import { FormatarNome } from "@/src/utils/formatarNome";
 import { CardItem } from "@/src/components/card/CardItem";
 import { useOrdemServico } from "@/src/hooks/useOrdemServico";
-import { FormatarNome } from "@/src/utils/formatarNome";
 
 const filtro = ["Todos", "Aberto", "Em Andamento", "Concluídas"];
 
@@ -21,7 +22,13 @@ export default function ListaOS() {
   const router = useRouter();
 
   const { usuario } = useAuth();
-  const { os } = useOrdemServico();
+  const { os, listarOs } = useOrdemServico();
+
+  useFocusEffect(
+    useCallback(() => {
+      listarOs();
+    }, []),
+  );
 
   const [filtroAtivo, setFiltroAtivo] = useState("Todos");
 

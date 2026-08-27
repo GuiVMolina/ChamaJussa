@@ -30,5 +30,5 @@ export function useOrdemServico() {
     listarOs();
   }, []);
 
-  return { os, cadastrarOs };
+  return { os, cadastrarOs, listarOs };
 }
